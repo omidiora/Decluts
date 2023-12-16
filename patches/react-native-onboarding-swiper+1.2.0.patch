@@ -1,0 +1,42 @@
+diff --git a/node_modules/react-native-onboarding-swiper/src/Dot.js b/node_modules/react-native-onboarding-swiper/src/Dot.js
+index 55566aa..a9e0227 100644
+--- a/node_modules/react-native-onboarding-swiper/src/Dot.js
++++ b/node_modules/react-native-onboarding-swiper/src/Dot.js
+@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
+ const Dot = ({ isLight, selected }) => {
+   let backgroundColor;
+   if (isLight) {
+-    backgroundColor = selected ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.3)';
++    backgroundColor = selected ? '#02A89E' : 'rgba(0, 0, 0, 0.3)';
+   } else {
+-    backgroundColor = selected ? '#fff' : 'rgba(255, 255, 255, 0.5)';
++    backgroundColor = selected ? '#02A89E' : 'rgba(255, 255, 255, 0.5)';
+   }
+   return (
+     <View
+@@ -26,10 +26,11 @@ Dot.propTypes = {
+ 
+ const styles = {
+   dot: {
+-    width: 6,
++    width: 14,
+     height: 6,
+     borderRadius: 3,
+     marginHorizontal: 3,
++    marginTop:-350
+   },
+ };
+ 
+diff --git a/node_modules/react-native-onboarding-swiper/src/index.js b/node_modules/react-native-onboarding-swiper/src/index.js
+index ad23272..2eceed5 100755
+--- a/node_modules/react-native-onboarding-swiper/src/index.js
++++ b/node_modules/react-native-onboarding-swiper/src/index.js
+@@ -312,7 +312,7 @@ Onboarding.defaultProps = {
+ 
+ const styles = {
+   overlay: {
+-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
++    backgroundColor: 'white',
+   },
+ };
+ 
