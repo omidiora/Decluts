@@ -18,6 +18,7 @@ import {LocalStorage} from '../../Util/Storage';
 import {AlertNofity, AlertNofityError} from '../../Util/notify';
 import {useNavigation} from '@react-navigation/native';
 import HeaderComponent from '../../component/HeaderComponent';
+import ViewContainer from '../../component/ViewContainer';
 
 const CreatePassword = props => {
   const {
@@ -58,7 +59,8 @@ const CreatePassword = props => {
 
   return (
     <KeyboardAwareScrollView style={styles.container}>
-      <View style={styles.header}>
+     
+        <ViewContainer>
         <HeaderComponent
           title="Login"
           rightComponent={true}
@@ -69,7 +71,7 @@ const CreatePassword = props => {
             })
           }
         />
-      </View>
+  
       <View
         style={[
           styles.imageContainerColumn,
@@ -154,6 +156,7 @@ const CreatePassword = props => {
           )
         )}
       </Formik>
+        </ViewContainer>
     </KeyboardAwareScrollView>
   );
 };
@@ -191,10 +194,10 @@ const styles = StyleSheet.create({
     marginLeft: 30,
   },
   form: {
-    alignSelf: 'center',
-    width: WP(104),
-    paddingLeft: WP(5),
-    marginLeft: WP(3.5),
+    // alignSelf: 'center',
+    // width: WP(104),
+    // paddingLeft: WP(5),
+     marginLeft: WP(4.5),
   },
   btn: {
     paddingTop: HP(3),

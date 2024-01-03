@@ -24,6 +24,8 @@ import {orderPaymentApi} from '../../redux/payment/api';
 import {ScrollView} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {upCreateProductApi} from '../../redux/product/api';
+import UploadNote from '../../assets/images/UploadNote.svg';
+
 
 Ionicons.loadFont();
 
@@ -48,7 +50,7 @@ const UploadAllItem = () => {
     formData.append('item_condition', item.condition);
     formData.append('defect_reason', item?.defect ? item?.defect : null);
     formData.append('brand', item.brand);
-    formData.append('seller_address', 'Lagos state');
+    formData.append('seller_address', item?.address);
     formData.append('has_defect', item?.defect ? '1' : '0');
     formData.append('filepath[0]', item?.file?.payload[0]?.path);
     formData.append('filepath[1]', item?.file?.payload[1]?.path);
@@ -60,9 +62,20 @@ const UploadAllItem = () => {
 
   console.log(item, 'adlmafl');
   return (
-    <View style={styles.container}>
+  <ScrollView>
+      <View style={styles.container}>
       <View style={styles.header}>
         <HeaderComponent rightComponent={' '} title={'Preview'} />
+        <UploadNote
+                      width={WP(104)}
+                      height={HP(11)}
+                      style={{
+                        alignSelf: 'center',
+
+                        paddingBottom: 50,
+                        // marginLeft: -50,
+                      }}
+                    />
       </View>
       <ScrollView>
         <View style={{paddingTop: 30}}>
@@ -182,6 +195,7 @@ const UploadAllItem = () => {
         </View>
       </View>
     </View>
+  </ScrollView>
   );
 };
 
@@ -234,17 +248,17 @@ const styles = StyleSheet.create({
     textAlign: 'centers',
     borderColor: 'transparent',
     backgroundColor: COLOR.mainColor,
-    width: WP(40),
-    height: HP(5.5),
+    width: WP(40.5),
+    height: HP(6.8),
   },
   showText: {
     textAlign: 'center',
-    alignSelf: 'center',
-    fontWeight: 'bold',
-    marginLeft: -10,
-    fontSize: WP(3.5),
-    color: COLOR.white,
-    paddingBottom: 30,
+     alignSelf: 'center',
+     fontWeight: 'bold',
+    // marginLeft: -10,
+     fontSize: WP(3.5),
+     color: COLOR.white,
+    //  padding: 30,
     // paddingLeft:10
   },
   totalPriceText: {

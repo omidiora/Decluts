@@ -35,7 +35,9 @@ import Clothing from '../../assets/images/svg/Clothing.svg';
 import Baby from '../../assets/images/svg/Baby.svg';
 import Game from '../../assets/images/svg/Game.svg';
 import Sport from '../../assets/images/svg/Sport.svg';
-import { useAsyncStorage } from '@react-native-async-storage/async-storage';
+import {useAsyncStorage} from '@react-native-async-storage/async-storage';
+import {AlertNofityError, notify} from '../../Util/notify';
+import Location from '../../assets/images/svg/location.svg'
 
 Entypo.loadFont();
 Feather.loadFont();
@@ -44,9 +46,10 @@ Feather.loadFont();
 const AllItem = () => {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
-  const {data, loading, error, category} = useAppSelector(state => state.product);
+  const {data, loading, error, category} = useAppSelector(
+    state => state.product,
+  );
   const [isModalVisible, setModalVisible] = useState(false);
- 
 
   const NavigateCategoryProduct = (id, title) => {
     navigation.navigate('CategoryProductDetail', {
@@ -60,9 +63,15 @@ const AllItem = () => {
     dispatch(fetchCategoryProductById(1));
   }, [dispatch]);
 
+ 
+  if (error?.isAxiosError && error?.response === undefined) {
+    AlertNofityError('Error', 'Check Your Network Connection!');
+  } else if (error) {
+    AlertNofityError('Error', error?.response?.data?.message );
+  }
 
-  
 
+  // console.log(error.response.data?.message)
   return (
     <View style={styles.container}>
       <View style={styles.categories}>
@@ -113,7 +122,7 @@ const AllItem = () => {
       <View style={styles.flatlist}>
         <FlatList
           contentContainerStyle={{paddingBottom: HP(50)}}
-          columnWrapperStyle={{width:'50%'}}
+          columnWrapperStyle={{width: '50%'}}
           numColumns={2}
           horizontal={false}
           data={category?.data}
@@ -125,6 +134,7 @@ const AllItem = () => {
               onPress={() =>
                 navigation.navigate('PreviewItem', {
                   item: item,
+                  showInterest:true
                 })
               }>
               <Image
@@ -143,7 +153,9 @@ const AllItem = () => {
                   {currencyFormatter(item.price)}
                 </Text>
                 <View style={{flexDirection: 'row'}}>
-                  <Entypo name="location-pin" color={'#DB242D'} size={15} />
+                 <View style={{marginTop:1.7,paddingHorizontal:3}}>
+                 <Location/>
+                 </View>
                   <Text style={styles.area}>
                     {item.area} {item.state}
                   </Text>
@@ -246,7 +258,7 @@ const styles = StyleSheet.create({
     // fontWeight: 'bold',
     marginVertical: 10,
     // textAlign: 'center',
-     marginLeft: 5,
+    marginLeft: 5,
     fontFamily: FontFamily.bold,
   },
   present: {
@@ -255,8 +267,8 @@ const styles = StyleSheet.create({
   },
   price: {
     fontWeight: 'bold',
-    color:COLOR.black,
-    fontFamily:FontFamily.regular,
+    color: COLOR.black,
+    fontFamily: FontFamily.regular,
 
     width: '70%',
     marginLeft: 4,

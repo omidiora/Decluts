@@ -22,8 +22,36 @@ import PhoneInput from 'react-native-phone-number-input';
 import HeaderComponent from '../../component/HeaderComponent';
 import {AlertNofityError} from '../../Util/notify';
 import {ErrorCheckPath} from '../../Util';
+import {Platform} from "react-native";
+// import {PUSHER_BEAMS_INSTANCE_ID} from "react-native-dotenv";
+import RNPusherPushNotifications from "react-native-pusher-push-notifications";
 
 const LoginScreen = () => {
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const boxHeight = useSharedValue(60);
   const [maxLines, setMaxLines] = React.useState(2);
   const [changeLayout, setChangeLayout] = React.useState(false);
@@ -52,14 +80,16 @@ const LoginScreen = () => {
               access_token: response?.data?.authorisation?.token,
             }),
           );
-          navigation.navigate('BottomTabNavigation');
+          navigation.navigate('RoutingRoute', {
+            screen: 'BottomTabNavigation',
+          });
         } else {
           AlertNofityError('Login Failed', 'Incorrect Login Detail');
         }
       })
       .catch(err => {
         console.log(err, 'ere');
-        AlertNofityError('Login Failed', 'Something Went Wrong!');
+        AlertNofityError('Login Failed', 'Check Your Internet Connection!');
       });
   };
 
@@ -108,32 +138,33 @@ const LoginScreen = () => {
         {({handleChange, handleBlur, handleSubmit, values, errors}) => (
           <>
             <View style={styles.form}>
-              <Text style={{marginVertical: 1, fontFamily: FontFamily.regular}}>
+              <Text style={{paddingBottom: 8, fontFamily: FontFamily.bold, color:"black"}}>
                 Phone Number *
               </Text>
-              <PhoneInput
-                value={values.phone?.replace(/ /g, '').replace('+234', '')}
-                defaultCode="NG"
-                textContainerStyle={{
-                  backgroundColor: COLOR.lightBlue,
-                }}
-                placeholder="08066666661"
-                containerStyle={{
-                  backgroundColor: COLOR.lightBlue,
-                  borderWidth: 0,
-                  width: '90%',
-                  height: Platform.OS == 'ios' ? '20%' : '20%',
-                  paddingTop: 5,
-                }}
-                ref={phoneInput}
-                defaultValue={values?.phone}
-                layout="first"
-                onChangeText={handleChange('phone')}
-                onChangeFormattedText={text => {
-                  setFormattedValue(text);
-                }}
-                withDarkTheme
-              />
+              <View style={{height: HP(8.5)}}>
+                <PhoneInput
+                  value={values.phone?.replace(/ /g, '').replace('+234', '')}
+                  defaultCode="NG"
+                  textContainerStyle={{
+                    backgroundColor: COLOR.lightBlue,
+                    // marginTop: 1.4,
+                  }}
+                  placeholder="08066666661"
+                  containerStyle={{
+                    backgroundColor: COLOR.lightBlue,
+                    borderWidth: 0,
+                    width: '90%',
+                  }}
+                  ref={phoneInput}
+                  defaultValue={values?.phone}
+                  layout="first"
+                  onChangeText={handleChange('phone')}
+                  onChangeFormattedText={text => {
+                    setFormattedValue(text);
+                  }}
+                  withDarkTheme
+                />
+              </View>
               <Text style={styles.phone}>{errors.phone}</Text>
               {/* <FormInput
                 label="Phone *"
@@ -195,6 +226,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: FontFamily.regular,
     fontSize: HP(2.5),
+    color: 'black',
   },
   form: {
     alignSelf: 'center',

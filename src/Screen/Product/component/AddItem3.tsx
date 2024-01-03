@@ -175,6 +175,10 @@ const AddItem3 = () => {
           title="Upload Item"
           rightComponent={true}
           rightText={'3/4'}
+          showStep={true}
+          step1={true}
+          step2={true}
+          step3={true}
         />
       </View>
 
@@ -185,7 +189,10 @@ const AddItem3 = () => {
         showsVerticalScrollIndicator={false}>
         <View style={styles.subContainer}>
           <Text style={styles.addItem}>Media</Text>
-          <Note width={WP(500)} height={HP(11)} style={{marginLeft: -870}} />
+          <Note width={WP(700)} height={HP(11)} style={{
+            alignSelf:"center",
+            marginLeft:-20
+          }} />
           {/* <Image source={BODY_IMAGE.note} style={styles.img} /> */}
 
           {imageTypes?.length > 0 ? (
@@ -263,7 +270,7 @@ const styles = StyleSheet.create({
     color: COLOR.black,
     fontWeight: 'bold',
     marginVertical: HP(2),
-    marginLeft: 10,
+    marginLeft: 17,
   },
   headerComponent: {
     // paddingLeft:-100
@@ -271,8 +278,8 @@ const styles = StyleSheet.create({
     paddingLeft: WP(-4),
   },
   subContainer: {
-    paddingLeft: WP(4),
-    paddingTop: HP(2),
+    paddingLeft: WP(2),
+  marginTop: HP(-2.6),
   },
   dropdown: {
     height: 50,

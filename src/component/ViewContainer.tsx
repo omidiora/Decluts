@@ -29,9 +29,13 @@ const styles = StyleSheet.create({
         flex:1,
         backgroundColor:COLOR.white
     },
+
     content:{
-      paddingHorizontal:WP(10),
-      paddingTop:HP(5),
-      width:'115%'
+      paddingHorizontal:WP(13.5),
+      // paddingTop:HP(5),
+       width:HP(60),
+       alignSelf:"center",
+       marginLeft:25,
+      
     }
 })

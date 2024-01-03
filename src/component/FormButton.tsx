@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     width: '90%',
     padding: HP(1.8),
     borderRadius: WP(1.2),
-    height:HP(6.3)
+    height:HP(7)
   },
   btnTitle: {
     textAlign: 'center',

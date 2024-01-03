@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {BODY_IMAGE, COLOR, HP, WP} from '../../Util/Util';
+import {BODY_IMAGE, COLOR, FontFamily, HP, WP} from '../../Util/Util';
 import ViewContainer from '../../component/ViewContainer';
 import OTPTextView from 'react-native-otp-textinput';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -14,14 +14,13 @@ import HeaderComponent from '../../component/HeaderComponent';
 import {LocalStorage} from '../../Util/Storage';
 import {useNavigation} from '@react-navigation/native';
 
-const OtpScreen = (props) => {
-
+const OtpScreen = props => {
   const [count, setCount] = useState(1);
   const navigation = useNavigation();
-  const [seconds, setSeconds] = useState(120);
+  const [seconds, setSeconds] = useState(60);
 
   const [OtpAuth, {isLoading, errors, data}] = useOtpAuthMutation();
-  const [ResendOtpAuth] = useResendOtpAuthMutation();
+  const [ResendOtpAuth, { isLoading:resendLoading}] = useResendOtpAuthMutation();
   const userId = LocalStorage.getNumber('userId');
   // useResendOtpAuthMutation
   const [otpNumber, setOtpNumber] = useState('');
@@ -46,10 +45,10 @@ const OtpScreen = (props) => {
     OtpAuth(otpNumber)
       .unwrap()
       .then(response => {
-        console.log(response,'response from verify otp')
+        console.log(response, 'response from verify otp');
         AlertNofity('Success', 'Account Verified Successfully');
-        navigation.navigate('BottomTabNavigation',{
-          screen:"Login"
+        navigation.navigate('Auth', {
+          screen: 'Login',
         });
       })
       .catch(err => {
@@ -67,7 +66,7 @@ const OtpScreen = (props) => {
       .then(response => {
         console.log(response, 'resonse');
         AlertNofity('Otp', 'Otp Resent Successfully');
-        setSeconds(120);
+        setSeconds(60);
       })
       .catch(err => {
         console.log(err, 'eee');
@@ -104,20 +103,26 @@ const OtpScreen = (props) => {
 
         <View style={styles.code}>
           <Text>
-            The code expires in{' '}
             <Text style={styles.sec}> {seconds} seconds.</Text>
           </Text>
         </View>
 
-        <TouchableOpacity style={styles.resend} onPress={() => ResendOtpCode()}>
-          <Text> Resend code</Text>
-        </TouchableOpacity>
+        {seconds == 0 && (
+          <TouchableOpacity
+            style={styles.resend}
+            onPress={() => ResendOtpCode()}>
+            <Text style={{color: 'grey', fontFamily: FontFamily.bold}}>
+              {' '}
+              Resend code
+            </Text>
+          </TouchableOpacity>
+        )}
 
         <View style={styles.verify}>
           <FormButton
             btnTitle="Verify"
             onPress={() => VerifyOtp()}
-            loading={isLoading}
+            loading={isLoading || resendLoading}
           />
         </View>
       </View>
@@ -177,20 +182,22 @@ const styles = StyleSheet.create({
   resend: {
     alignSelf: 'center',
     padding: HP(2),
+    marginTop: 20,
   },
   verify: {
     alignSelf: 'center',
     padding: HP(2),
     width: '100%',
     marginLeft: HP(4),
+    marginTop: 30,
   },
   input: {
     paddingLeft: WP(3),
     alignSelf: 'center',
     width: '95%',
-    paddingTop: HP(5),
+    // paddingTop: HP(5),
   },
-  phoneNumber:{
-    color:COLOR.mainColor
-  }
+  phoneNumber: {
+    color: COLOR.mainColor,
+  },
 });

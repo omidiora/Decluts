@@ -17,6 +17,8 @@ import {
   updateItemSuccess4,
 } from '../../../redux/product/api';
 
+import Pricing from '../../../assets/images/pricing.svg';
+
 const AddItem4 = () => {
   const [discountPice, setDiscountPice] = React.useState<number>(0);
   const dispatch = useDispatch();
@@ -34,7 +36,7 @@ const AddItem4 = () => {
 
   const Eightpercentage = (num: number) => {
     let value = ((8 / 100) * num).toFixed(1);
-    setDiscountPice((num)-Number(value));
+    setDiscountPice(num - Number(value));
     return value;
   };
   return (
@@ -44,6 +46,11 @@ const AddItem4 = () => {
         title="Upload Item"
         rightComponent={true}
         rightText={'4/4'}
+        showStep={true}
+        step1={true}
+        step2={true}
+        step3={true}
+        step4={true}
       />
       <KeyboardAwareScrollView contentContainerStyle={{paddingBottom: 10}}>
         <View style={styles.subContainer}>
@@ -55,23 +62,47 @@ const AddItem4 = () => {
           >
             {({handleChange, handleBlur, handleSubmit, values, errors}) => (
               <View style={styles.formInput}>
-                <FormInput
-                  value={values.price}
-                  label="Enter price *"
-                  placeholder="Enter 2500 *"
-                  onChangeText={handleChange('price')}
-                  handleBlur={Eightpercentage(values.price)}
-                />
-                <FormInput
-                  label="You’ll get *"
-                  placeholder="Enter 2500 *"
-                  onChangeText={() => {}}
-                  value={String(discountPice)}
-                />
-                <FormButton
-                  btnTitle="Next"
-                  onPress={() => CreateItemFunction(values)}
-                />
+                <View>
+                  <Text style={styles.addItem}>Pricing</Text>
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      marginLeft: 10,
+                      paddingBottom: 50,
+                    }}>
+                    <Pricing
+                      width={WP(95)}
+                      height={HP(11)}
+                      style={{
+                        alignSelf: 'center',
+
+                        paddingBottom: 50,
+                        marginLeft: -50,
+                      }}
+                    />
+                  </View>
+                </View>
+                <View style={{marginTop: -50}}>
+                  <FormInput
+                    value={values.price}
+                    label="Enter price *"
+                    placeholder="Enter 2500 *"
+                    onChangeText={handleChange('price')}
+                    handleBlur={Eightpercentage(values.price)}
+                  />
+                  <FormInput
+                    label="You’ll get *"
+                    placeholder="Enter 2500 *"
+                    onChangeText={() => {}}
+                    value={String(discountPice)}
+                  />
+                  <View style={{marginTop:220}}>
+                  <FormButton
+                    btnTitle="Preview"
+                    onPress={() => CreateItemFunction(values)}
+                  />
+                  </View>
+                </View>
               </View>
             )}
           </Formik>
@@ -91,19 +122,21 @@ const styles = StyleSheet.create({
   addItem: {
     color: COLOR.black,
     fontWeight: 'bold',
-    paddingBottom: HP(4),
+     paddingBottom: HP(0.5),
+    fontSize: WP(5),
   },
   headerComponent: {
     // paddingLeft:-100
   },
   subContainer: {
     paddingLeft: WP(4),
-    paddingTop: HP(2),
+    paddingTop: HP(1.4),
   },
   header: {
     paddingHorizontal: 10,
   },
   formInput: {
     width: '107%',
+    marginTop: HP(-2),
   },
 });

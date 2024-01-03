@@ -2,7 +2,7 @@ import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {Hideo, Kohana} from 'react-native-textinput-effects';
-import {COLOR, HP} from '../../Util/Util';
+import {COLOR, HP, WP} from '../../Util/Util';
 import TextInput from 'react-native-text-input-interactive';
 import SearchInput from '../../component/SearchInput';
 import PostComponent from '../../component/PostComponent';
@@ -40,7 +40,6 @@ const CategoryProductDetail = props => {
   };
 
   // console.log(searchWord(),'1sd1')
-  console.log(params.categoryId, '11');
 
   return (
     <View style={styles.container}>
@@ -55,10 +54,10 @@ const CategoryProductDetail = props => {
         />
         <View style={styles.recent}>
           <Text style={styles.recents}>
-            {category?.data?.data?.length} total result
+            {category?.data?.data?.length || 0} total result
           </Text>
           <TouchableOpacity onPress={() => {}}>
-            <Feather name="settings" size={30} color={COLOR.black} />
+            <Feather name="settings" size={20} color={COLOR.black} />
           </TouchableOpacity>
         </View>
         <View style={styles.flatListContainer}>
@@ -87,6 +86,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingTop: HP(4),
+    width:"92%",
+    marginLeft:WP(70)
   },
   recents: {
     color: COLOR.black,

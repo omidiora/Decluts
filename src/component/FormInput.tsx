@@ -22,8 +22,8 @@ interface FormInputProps {
   showPassword?: boolean;
   forgotPassword: boolean;
   error: string;
-  value:string | undefined,
-  multiline:boolean
+  value: string | undefined;
+  multiline: boolean;
 }
 const FormInput = ({
   label,
@@ -35,7 +35,7 @@ const FormInput = ({
   forgotPassword,
   error,
   value,
-  multiline=false
+  multiline = false,
 }: FormInputProps) => {
   const [password, setPassword] = React.useState<boolean>(false);
   const navigation = useNavigation();
@@ -51,21 +51,26 @@ const FormInput = ({
         )}
       </View>
       <View style={{flexDirection: 'row'}}>
-   
         <TextInput
-         numberOfLines={multiline?0:3}
-          multiline={multiline?true:false}
+          numberOfLines={multiline ? 0 : 3}
+          multiline={multiline ? true : false}
           autoCapitalize="none"
           placeholder={placeholder}
-          style={[styles.textInput,multiline&&{height:HP(15),paddingTop:HP(2)}]}
+          style={[
+            styles.textInput,
+            multiline && {
+              height: HP(15),
+              paddingTop: HP(2),
+              textAlignVertical: 'top',
+            },
+          ]}
           onChangeText={onChangeText}
           onFocus={onFocus}
           onBlur={onBlur}
-          secureTextEntry={!password && showPassword==true}
+          secureTextEntry={!password && showPassword == true}
           // inputMode={password ? 'numeric' : 'text'}
           value={value}
         />
-        
 
         {showPassword && (
           <TouchableOpacity
@@ -75,12 +80,12 @@ const FormInput = ({
           </TouchableOpacity>
         )}
       </View>
-
       {error && (
-        <View>
+        <View style={{top:multiline?1:3}}>
           <Text style={styles.error}>{error}</Text>
         </View>
       )}
+     
     </View>
   );
 };
@@ -103,7 +108,7 @@ const styles = StyleSheet.create({
     padding: HP(2),
     borderRadius: WP(1),
     backgroundColor: '#E4E7EC',
-    height: Platform.OS == 'ios' ? '124%' : '70%',
+    height: HP(7),
   },
   eye: {
     paddingTop: HP(2),
@@ -121,7 +126,7 @@ const styles = StyleSheet.create({
   },
   error: {
     color: 'red',
-     paddingTop:Platform.OS=='ios'?15:-30
+    // paddingTop: Platform.OS == 'ios' ? 15 : -160,
     // marginTop:-15
   },
 });

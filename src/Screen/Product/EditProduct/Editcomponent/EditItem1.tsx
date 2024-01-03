@@ -2,7 +2,7 @@ import {StyleSheet, Text, View, Platform, Animated} from 'react-native';
 import React, {useState} from 'react';
 import ViewContainer from '../../../../component/ViewContainer';
 import HeaderComponent from '../../../../component/HeaderComponent';
-import {COLOR, HP, WP} from '../../../../Util/Util';
+import {COLOR, FontFamily, HP, WP} from '../../../../Util/Util';
 import FormInput from '../../../../component/FormInput';
 import {Formik} from 'formik';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -18,19 +18,19 @@ import {
   StateAndCapital,
   StateInNigeria,
 } from '../../../../Util/StateAndLga';
+import DropDownSelect from '../../../../component/DropDownSelect';
 const data = [
   {label: 'Neatly Used (Old)', value: 'Neatly Used'},
   {label: 'New', value: 'New'},
 ];
 
-const EditItem1 = props => {
+const EditItem1 = ( props ) => {
   var productDetails = props?.route?.params?.productDetails;
-
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const product = useSelector(state => state.product);
+  const {editProductListItem }= useSelector(state => state.product);
   const SetItemProduct = (values: any) => {
     dispatch(
       updateItemSuccess({
@@ -38,15 +38,16 @@ const EditItem1 = props => {
         description: values.description,
         area: values.area,
         states: values.state,
-        address: values.address,
+        // address: values.address,
         condition: values.condition,
         price: values.price,
       }),
     );
-    navigation.navigate('Item2');
+    navigation.navigate('EditItem2');
   };
 
-  let scrollOffsetY = React.useRef(new Animated.Value(0)).current;
+
+  // console.log(editProductListItem ,'productDetails')
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <View style={styles.header}>
@@ -58,18 +59,21 @@ const EditItem1 = props => {
       </View>
       <KeyboardAwareScrollView
         stickyHeaderIndices={[1]}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         style={styles.container}
-        contentContainerStyle={{paddingBottom: 10, marginLeft: 10}}>
+        contentContainerStyle={{paddingBottom: 13, marginLeft: 10}}>
         <View style={styles.subContainer}>
+          <Text style={styles.basicInfo}>Basic Info</Text>
           <Formik
             validationSchema={ItemSchema1}
             initialValues={{
-              name: '',
-              description: '',
-              area: '',
-              state: '',
-              address: '',
-              condition: '',
+              name: productDetails?.item_name,
+              description: productDetails?.description,
+              area: productDetails?.area,
+              state: productDetails?.state,
+              address: productDetails?.seller_address,
+              condition: productDetails?.item_condition,
             }}
             onSubmit={values => SetItemProduct(values)}>
             {({
@@ -79,7 +83,6 @@ const EditItem1 = props => {
               values,
               errors,
               setFieldValue,
-              touched,
             }) => (
               <View style={styles.formInput}>
                 <FormInput
@@ -87,6 +90,7 @@ const EditItem1 = props => {
                   placeholder="Enter item name *"
                   onChangeText={handleChange('name')}
                   error={errors.name}
+                  value={values?.name}
                 />
 
                 <FormInput
@@ -94,112 +98,45 @@ const EditItem1 = props => {
                   placeholder="Description *"
                   onChangeText={handleChange('description')}
                   multiline={true}
-                  error={errors.description && touched.description}
+                  error={errors.description}
+                  value={values?.description}
+                />
+                  <DropDownSelect
+                  placeholder={'Select State'}
+                  onChange={e => setFieldValue('state', e.value)}
+                  title={'State'}
+                  data={StateInNigeria}
+                  error={errors.area}
+                  value={values?.state}
                 />
 
-                <View style={styles.dropItem}>
-                  <Text style={styles.label}>State</Text>
-                  <Dropdown
-                    style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    inputSearchStyle={styles.inputSearchStyle}
-                    iconStyle={styles.iconStyle}
-                    data={StateInNigeria}
-                    search={true}
-                    maxHeight={300}
-                    labelField="label"
-                    valueField="value"
-                    placeholder={!isFocus ? 'Select State' : '...'}
-                    searchPlaceholder="Search..."
-                    value={value}
-                    onFocus={() => setIsFocus(true)}
-                    onBlur={() => setIsFocus(false)}
-                    onChange={e => setFieldValue('state', e.value)}
-                    renderRightIcon={() => (
-                      <Entypo
-                        style={styles.icon}
-                        color={isFocus ? 'blue' : 'black'}
-                        name="chevron-thin-down"
-                        size={20}
-                      />
-                    )}
-                  />
-                  <Text style={styles.conditionError}>
-                    {errors.state && touched.state}
-                  </Text>
-                </View>
+                {/* <DropDownSelect
+                  placeholder={'Select Staadafadte'}
+                  onChange={e => setFieldValue('state', e.value)}
+                  title={'State'}
+                  data={StateInNigeria}
+                  error={errors.state}
+                  value={'adfd'}
+                /> */}
 
-                <View style={styles.dropItem}>
-                  <Text style={styles.label}>Area(Local Goverment)</Text>
-                  <Dropdown
-                    style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    inputSearchStyle={styles.inputSearchStyle}
-                    iconStyle={styles.iconStyle}
-                    data={LocalGoverment}
-                    search={true}
-                    maxHeight={300}
-                    labelField="label"
-                    valueField="value"
-                    placeholder={!isFocus ? 'Select Area' : '...'}
-                    searchPlaceholder="Search..."
-                    value={value}
-                    onFocus={() => setIsFocus(true)}
-                    onBlur={() => setIsFocus(false)}
-                    onChange={e => setFieldValue('area', e.value)}
-                    renderRightIcon={() => (
-                      <Entypo
-                        style={styles.icon}
-                        color={isFocus ? 'blue' : 'black'}
-                        name="chevron-thin-down"
-                        size={20}
-                      />
-                    )}
-                  />
-                  <Text style={styles.conditionError}>
-                    {errors.area && touched.area}
-                  </Text>
-                </View>
-                <View style={styles.dropItem}>
-                  <Text style={styles.label}>Item Condition *</Text>
-                  <Dropdown
-                    style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    inputSearchStyle={styles.inputSearchStyle}
-                    iconStyle={styles.iconStyle}
-                    data={data}
-                    search={false}
-                    maxHeight={300}
-                    labelField="label"
-                    valueField="value"
-                    placeholder={!isFocus ? 'Select Condition' : '...'}
-                    searchPlaceholder="Search..."
-                    value={value}
-                    onFocus={() => setIsFocus(true)}
-                    onBlur={() => setIsFocus(false)}
-                    onChange={e => setFieldValue('condition', e.value)}
-                    renderRightIcon={() => (
-                      <Entypo
-                        style={styles.icon}
-                        color={isFocus ? 'blue' : 'black'}
-                        name="chevron-thin-down"
-                        size={20}
-                      />
-                    )}
-                  />
-                  <Text style={styles.conditionError}>
-                    {errors.condition && touched.condition}
-                  </Text>
-                </View>
-
-                <FormInput
-                  label="Address *"
-                  onChangeText={handleChange('address')}
-                  error={errors.address}
+                <DropDownSelect
+                  placeholder={'Select Local Goverment'}
+                  onChange={e => setFieldValue('area', e.value)}
+                  title={'Area(Local Goverment)'}
+                  data={LocalGoverment}
+                  error={errors.area}
+                  value={values?.area}
                 />
+                <DropDownSelect
+                  placeholder={'Select Condition'}
+                  onChange={e => setFieldValue('condition', e.value)}
+                  title={'Item Condition'}
+                  data={data}
+                  error={errors.condition}
+                  value={values?.condition}
+                />
+
+               
 
                 <View style={styles.btn}>
                   <FormButton btnTitle="Next" onPress={() => handleSubmit()} />
@@ -257,7 +194,8 @@ const styles = StyleSheet.create({
     // fontSize: 14,
   },
   placeholderStyle: {
-    fontSize: 16,
+    fontSize: 12,
+    fontFamily: FontFamily.regular,
   },
   selectedTextStyle: {
     fontSize: 16,
@@ -285,4 +223,11 @@ const styles = StyleSheet.create({
     width: '90%',
     marginLeft: 20,
   },
+  basicInfo: {
+    fontSize: WP(6.6),
+    //  fontWeight:'bold',
+    color: '#344054',
+    fontFamily: FontFamily.bold,
+  },
 });
+

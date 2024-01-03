@@ -18,6 +18,7 @@ import {
   updateItemSuccess2,
 } from '../../../../redux/product/api';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import DropDownSelect from '../../../../component/DropDownSelect';
 
 const data = [
   {label: 'New', value: 'New', search: 'New'},
@@ -35,13 +36,13 @@ const DefectIMap = [
   },
 ];
 
-const EditItem2 = ({productDetails}) => {
+const EditItem2 = () => {
   const [value, setValue] = useState<string>();
   const [isFocus, setIsFocus] = useState(false);
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const product = useSelector(state => state.product?.item);
+  const {editProductListItem }= useSelector(state => state.product);
 
   const SetItemProduct = (values: any) => {
     dispatch(
@@ -51,10 +52,10 @@ const EditItem2 = ({productDetails}) => {
         defect: values.defectReason ? values.defectReason : 'None',
       }),
     );
-    navigation.navigate('Item3');
+    navigation.navigate('EditItem3');
   };
 
-  console.log(productDetails?.has_defect, 'a111111');
+   console.log( editProductListItem?.defect_reason, 'a111111jj1');
   return (
     <KeyboardAwareScrollView
       style={styles.container}
@@ -69,10 +70,10 @@ const EditItem2 = ({productDetails}) => {
       <Formik
         validationSchema={ItemSchema2}
         initialValues={{
-          condition: productDetails?.item_condition,
-          brand: productDetails?.brand,
-          selectedId: productDetails?.has_defect,
-          defectReason: productDetails?.has_defect,
+          condition:editProductListItem?.item_condition,
+          brand:editProductListItem?.brand,
+          selectedId:editProductListItem?.defect_reason ?"Yes" :"No",
+          defectReason:editProductListItem?.defect_reason,
         }}
         onSubmit={values => SetItemProduct(values)}>
         {({
@@ -83,32 +84,23 @@ const EditItem2 = ({productDetails}) => {
           errors,
           setFieldValue,
         }) => (
+         
+         console.log(values,'values'),
           <View style={styles.subContainer}>
-            <Text style={styles.text}>Select Condition</Text>
-            <Dropdown
-              style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={data}
-              maxHeight={300}
-              minHeight={100}
-              labelField="label"
-              valueField="value"
-              placeholder=""
-              value={values.condition}
-              // value={}
-              // searchField="search"
-              placeholder={!isFocus ? 'Select Condition' : '...'}
-              searchPlaceholder="Search..."
-              
-              onFocus={() => setIsFocus(true)}
-              onBlur={() => setIsFocus(false)}
+            {/* <Text style={styles.text}>Select Condition</Text> */}
+
+           <View style={{width:WP(99.5)}}>
+           <DropDownSelect
+              placeholder={values?.condition}
               onChange={e => setFieldValue('condition', e.value)}
-              renderLeftIcon={() => <></>}
+              title={'Item Condition'}
+              data={data}
+              error={errors.condition}
+              value={values?.condition}
+              search={false}
             />
-            <Text style={{color: 'red'}}>{errors.condition}</Text>
+           </View>
+           
 
             <View style={styles.FormInput}>
               <FormInput
@@ -129,17 +121,18 @@ const EditItem2 = ({productDetails}) => {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
-                  width: '40%',
+                  width: '50%',
                   marginVertical: 10,
                 }}>
                 {DefectIMap.map(item => (
+                 
                   <TouchableWithoutFeedback
                     style={{flexDirection: 'row'}}
                     onPress={() => setFieldValue('selectedId', item.title)}>
                     {/*   onChange={e => setFieldValue('condition', e.value)} */}
                     <MaterialCommunityIcons
-                      name={
-                        values.selectedId == item.title
+                      name={ 
+                       ( values.selectedId=="Yes" ?"Yes":"No" || editProductListItem?.defect_reason !==null) == item.title
                           ? 'checkbox-blank-circle'
                           : 'checkbox-blank-circle-outline'
                       }
@@ -155,7 +148,7 @@ const EditItem2 = ({productDetails}) => {
               <Text style={{marginTop: 10, color: 'red'}}>
                 {errors.selectedId}
               </Text>
-              {values.selectedId == 'Yes'  && (
+              { values.selectedId == 'Yes' && (
                 <>
                   <FormInput
                     placeholder="Defect(issue)"
@@ -163,6 +156,7 @@ const EditItem2 = ({productDetails}) => {
                     multiline={true}
                     onChangeText={text => setFieldValue('defectReason', text)}
                     error={errors.defectReason}
+                    value={values?.defectReason}
                   />
                 </>
               )}
@@ -194,7 +188,7 @@ const styles = StyleSheet.create({
     // paddingLeft:-100
   },
   subContainer: {
-    paddingLeft: WP(4),
+    paddingLeft: WP(5),
     paddingTop: HP(5),
   },
   dropdown: {

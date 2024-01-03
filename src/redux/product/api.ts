@@ -17,6 +17,7 @@ const productApi = createSlice({
     error: null,
     paystackUrl: null,
     updateUploadProgress: 0,
+    editProductListItem: {},
     item: {
       item_name: '',
       description: '',
@@ -249,6 +250,12 @@ const productApi = createSlice({
     updateUploadProgress(state, action) {
       state.updateUploadProgress = action.payload;
     },
+
+    editProductItemAction(state, action) {
+      state.editProductListItem = action.payload;
+    },
+
+    //  editProduct
   },
 });
 
@@ -301,6 +308,7 @@ export const {
   orderHistoryPendingSuccess,
   orderHistoryPendingFailure,
   updateUploadProgress,
+  editProductItemAction,
 } = productApi.actions;
 
 export const fetchApiData = () => async dispatch => {
@@ -347,27 +355,30 @@ export const DeleteProduct = (id: string) => (dispatch: Dispatch) => {
       url: `${SERVER_URL}/item/delete/${id}`,
       method: 'DELETE',
     })
-      .then((response) => {
-        
-       if(response?.data?.code==200){
-        AlertNofity('Product ', 'Item Deleted Successfully');
-        dispatch(delteItemSuccess(response.data));
-        dispatch(MyPostItem());
-        resolve(response);
-       }
-       else{
-        AlertNofityError('Error Product ', response?.message ?? 'Something went wrong!');
-        dispatch(deleteItemFailure(response?.data));
-       }
+      .then(response => {
+        if (response?.data?.code == 200) {
+          AlertNofity('Product ', 'Item Deleted Successfully');
+          dispatch(delteItemSuccess(response.data));
+          dispatch(MyPostItem());
+          resolve(response);
+        } else {
+          AlertNofityError(
+            'Error Product ',
+            response?.message ?? 'Something went wrong!',
+          );
+          dispatch(deleteItemFailure(response?.data));
+        }
       })
-      .catch((error) => {
-        AlertNofityError('Error Product ', error.message ?? 'Check your internet connection!');
+      .catch(error => {
+        AlertNofityError(
+          'Error Product ',
+          error.message ?? 'Check your internet connection!',
+        );
         dispatch(deleteItemFailure(error));
         reject(error);
       });
   });
 };
-
 
 export const upLoadFileApi =
   (payload: upLoadFileApiPayload, navigation: any) =>
@@ -384,18 +395,19 @@ export const upLoadFileApi =
           },
           onUploadProgress: progressEvent => {
             // Calculate the percentage
+            // console.log(progress,'progress')
             const progress = Math.round(
               (progressEvent.loaded * 100) / progressEvent.total,
             );
 
-            console.log(progress,'progress')
+            // console.log(progress,'progress')
             // Dispatch an action to handle the progress
             dispatch(updateUploadProgress(progress));
           },
         },
       ); // Adjust endpoint as needed
 
-      console.log(response?.data?.data, 'response');
+      // console.log(response?.data?.data, 'response');
       dispatch(upLoadFileSuccess(response));
       dispatch(updateItemSuccess3(response?.data?.data));
 
@@ -403,7 +415,7 @@ export const upLoadFileApi =
         navigation.navigate('Item4');
       }
     } catch (error) {
-      console.log(error.data, 'error from');
+      // console.log(error.data, 'error from');
       dispatch(upLoadFileFailure(error));
     }
   };
@@ -427,6 +439,7 @@ export const upCreateProductApi =
       dispatch(upLoadFileSuccess(response.data));
       navigation.navigate('BottomTabNavigation');
     } catch (error) {
+      console.log(error,'error')
       AlertNofityError('Upload Failed', error.data?.message);
       dispatch(upLoadFileFailure(error));
     }

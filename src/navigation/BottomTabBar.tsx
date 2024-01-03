@@ -9,6 +9,10 @@ import OrderNavigation from './OrderNavigation';
 import ProfileScreen from '../Screen/Profile/ProfileScreen';
 import ProfileNavigation from './ProfileNavigaton';
 import SearchScreen from '../Screen/Search/SearchScreen';
+import SearchIcon from '../assets/images/svg/search.svg'
+import ClockIcon from '../assets/images/svg/clock.svg'
+import PersonIcon from '../assets/images/svg/person.svg'
+import HomeIcon from '../assets/images/svg/home.svg'
 const Tab = createMaterialBottomTabNavigator();
 
 const ICON_SIZE = 30;
@@ -45,11 +49,7 @@ const BottomTabNavigation = () => {
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color, focused}) => (
-            <MaterialCommunityIcons
-              name={focused ? 'home' : 'home-outline'}
-              size={ICON_SIZE}
-              color={focused ? COLOR.mainColor : COLOR.black}
-            />
+            <HomeIcon style={{ color: focused? COLOR.mainColor:COLOR.black}}/>
           ),
         }}
       />
@@ -59,11 +59,8 @@ const BottomTabNavigation = () => {
         options={{
           tabBarLabel: 'Search',
           tabBarIcon: ({color, focused}) => (
-            <Feather
-              name="search"
-              size={ICON_SIZE}
-              color={focused ? COLOR.mainColor : COLOR.black}
-            />
+            <SearchIcon  style={{ color: focused? COLOR.mainColor:COLOR.black}}
+             />
           ),
         }}
       />
@@ -73,11 +70,7 @@ const BottomTabNavigation = () => {
         options={{
           tabBarLabel: 'History',
           tabBarIcon: ({color, focused}) => (
-            <MaterialCommunityIcons
-              name="clock-time-three-outline"
-              size={ICON_SIZE}
-              color={focused ? COLOR.mainColor : COLOR.black}
-            />
+            <ClockIcon style={{ color: focused? COLOR.mainColor:COLOR.black}}/>
           ),
         }}
       />
@@ -88,11 +81,8 @@ const BottomTabNavigation = () => {
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({color, focused}) => (
-            <Octicons
-              name="person"
-              size={ICON_SIZE}
-              color={focused ? COLOR.mainColor : COLOR.black}
-            />
+            <PersonIcon style={{ color: focused? COLOR.mainColor:COLOR.black}}/>
+
           ),
         }}
       />

@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 export const ItemSchema1 = yup.object().shape({
-  name: yup.string().required('Item name Field is Required'),
+  name: yup.string().required('Name Field is Required'),
 
   description: yup.string().required('Description is required'),
 
@@ -9,13 +9,13 @@ export const ItemSchema1 = yup.object().shape({
 
   state: yup.string().required('The state is required'),
 
-  address: yup.string().required('The address is required'),
+  // address: yup.string().required('The address is required'),
 
   condition: yup.string().required('The condition  is required'),
 });
 
 export const ItemSchema2 = yup.object().shape({
-  category: yup.string().required('Category  is Required'),
+  // category: yup.string().required('Category  is Required'),
 
   brand: yup.string().required('Brand is required'),
 

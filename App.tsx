@@ -38,22 +38,37 @@ import AddItem3 from './src/Screen/Product/component/AddItem3';
 import AddItem2 from './src/Screen/Product/component/AddItem2';
 import AddItem4 from './src/Screen/Product/component/AddItem4';
 import {HP} from './src/Util/Util';
-import { SheetProvider } from "react-native-actions-sheet";
+import {SheetProvider} from 'react-native-actions-sheet';
 import './sheets';
-
-
+import {useAsyncStorage} from '@react-native-async-storage/async-storage';
+import RoutingRoute from './src/navigation/PrivateRoute';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const App = () => {
-
   const HideOnboardingScreen = LocalStorage.getBoolean('hideOnboardingScreen');
+  const {getItem, setItem} = useAsyncStorage('@declut_user');
+  const [users, setUsers] = React.useState(null);
+
+  const readItemFromStorage = async () => {
+    const item = await getItem();
+    setUsers(JSON.parse(item)?.user);
+  };
+
+  React.useEffect(() => {
+    readItemFromStorage();
+  }, [users]);
+
+  // useAsyncStorage.setItem(
+  //   '@declut_user',
+  //   JSON.stringify({ user, access_token })
+  // );
+
+  // console.log(users,'almdl')
 
   return (
     <Provider store={store}>
-  
       <SafeAreaProvider>
-     
         <View style={styles.StatusBar}>
           <StatusBar
             hidden={false}
@@ -66,153 +81,55 @@ const App = () => {
           <SafeAreaView style={{flex: 1}}>
             <MenuProvider>
               <NavigationContainer>
-              <>
-                <Stack.Navigator>
+                <>
+                  <Stack.Navigator>
+                    {/* <Stack.Screen
+                        name="Onboardinga"
+                        component={OrderScreen}
+                        options={{
+                          headerShown: false,
+                        }}
+                      />
+                    {!HideOnboardingScreen && (
+                      <Stack.Screen
+                        name="Onboarding"
+                        component={OnboardingScreen}
+                        options={{
+                          headerShown: false,
+                        }}
+                      />
+                    )}
 
-                {/* <Stack.Screen
-                    name="Auth"
-                    component={AuthNavigation}
-                    options={{
-                      headerShown: false,
-                    }}
-                  />  */}
-                  {/* <Stack.Screen
-                    name="Onboarding"
-                    component={OnboardingScreen}
-                    options={{
-                      headerShown: false,
-                    }}
-                  />  */}
-                  {/* {!HideOnboardingScreen && (
+                    */}
+
+                    {!users && (
+                      <Stack.Screen
+                        name="Auth"
+                        component={AuthNavigation}
+                        options={{
+                          headerShown: false,
+                        }}
+                      />
+                    )}
+
                     <Stack.Screen
-                      name="Onboarding"
-                      component={OnboardingScreen}
+                      name="RoutingRoute"
+                      component={RoutingRoute}
                       options={{
                         headerShown: false,
                       }}
                     />
-                  )} */}
-{/* 
-                */}
-                   <Stack.Screen
-                    name="BottomTabNavigation"
-                    component={BottomTabNavigation}
-                    options={{
-                      headerShown: false,
-                    }}
-                  />
-
-                  {/*
-                  <Stack.Screen
-                    name="Payment"
-                    component={PaymentNavigation}
-                    options={{
-                      headerShown: false,
-                    }}
-                  />
-
-                  <Stack.Screen
-                    name="OrderRating"
-                    component={Rating}
-                    options={{
-                      headerShown: false,
-                    }}
-                  /> */}
-                  <Stack.Screen
-                    name="ProductNavigation"
-                    component={ProductNavigation}
-                    options={{
-                      headerShown: false,
-                    }}
-                  />
-
-                  <Stack.Screen
-                    name="UploadAllItem"
-                    component={UploadAllItem}
-                    options={{
-                      headerShown: false,
-                    }}
-                  />
-
-                  <Stack.Screen
-                    name="OrderScreen"
-                    component={OrderScreen}
-                    options={{
-                      headerShown: false,
-                    }}
-                  />
-
-                  <Stack.Screen
-                    name="PreviewItem"
-                    component={PreviewItem}
-                    options={{
-                      headerShown: false,
-                    }}
-                  />
-                  {/* 
-                 
-
-                   */}
-
-                  <Stack.Screen
-                    name="Setting"
-                    component={Setting}
-                    options={{
-                      headerShown: false,
-                    }}
-                  />
-
-                  <Stack.Screen
-                    name="CategoryProductDetail"
-                    component={CategoryProductDetail}
-                    options={{
-                      headerShown: false,
-                    }}
-                  />
-
-                  <Stack.Screen
-                    name="License"
-                    component={LicenseScreen}
-                    options={{
-                      headerShown: false,
-                    }}
-                  />
-                  <Stack.Screen
-                    name="Search"
-                    component={SearchScreen}
-                    options={{
-                      headerShown: false,
-                    }}
-                  />
-
-                  {/* <Stack.Screen
-                    name="AddItem1"
-                    component={MainItem}
-                    options={{
-                      headerShown: false,
-                    }}
-                  /> */}
-
-                  <Stack.Screen
-                    name="OrderNavigation"
-                    component={OrderNavigation}
-                    options={{
-                      headerShown: false,
-                    }}
-                  />
-
-                  {/* OrderNavigation */}
-                </Stack.Navigator>
+                  </Stack.Navigator>
                 </>
               </NavigationContainer>
             </MenuProvider>
           </SafeAreaView>
         </AlertNotificationRoot>
-       
       </SafeAreaProvider>
     </Provider>
   );
 };
+('');
 
 export default App;
 

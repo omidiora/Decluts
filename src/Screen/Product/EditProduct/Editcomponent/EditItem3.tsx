@@ -20,7 +20,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {createThumbnail} from 'react-native-create-thumbnail';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   upLoadFileApi,
   updateImagePreView,
@@ -29,6 +29,7 @@ import {
 import {useAppDispatch, useAppSelector} from '../../../../redux/hook';
 import {getUserAsyncStorage} from '../../../../Util';
 import {useNavigation} from '@react-navigation/native';
+import VideoPlayer from 'react-native-video-player';
 
 const data = [
   {label: 'Lagos', value: '1', search: 'Lagos'},
@@ -44,6 +45,8 @@ const EditItem3 = () => {
   const dispatch = useAppDispatch();
   const {data, loading, error, item} = useAppSelector(state => state.product);
   const navigation = useNavigation();
+
+  const {editProductListItem} = useSelector(state => state.product);
 
   const SetItemProduct = (values: any) => {
     dispatch(
@@ -104,7 +107,7 @@ const EditItem3 = () => {
   };
 
   const UploadFileFunction = async () => {
-    if (imageTypes.length !== 3 || !Object.keys(videoTypes).length) {
+    if (editProductListItem?.item_media  || !Object.keys(videoTypes).length) {
       Alert.alert(
         'Image File Error',
         'You must select three good picture  and one video for the Item',
@@ -162,6 +165,10 @@ const EditItem3 = () => {
     UploadFileFunction();
   };
 
+  console.log(
+    editProductListItem?.item_media[3]?.filepath,
+    'editProductListItem',
+  );
   return (
     <KeyboardAwareScrollView
       showsHorizontalScrollIndicator={false}
@@ -180,54 +187,64 @@ const EditItem3 = () => {
         <Text style={styles.addItem}>Media</Text>
 
         <Image source={BODY_IMAGE.note} style={styles.img} />
+        <View style={styles.imageContainer}>
+          <TouchableOpacity>
+            <Image
+              source={{
+                uri: editProductListItem?.item_media[0]?.filepath,
+              }}
+              style={styles.image}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image
+              source={{
+                uri: editProductListItem?.item_media[1]?.filepath,
+              }}
+              style={styles.image}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image
+              source={{
+                uri: editProductListItem?.item_media[2]?.filepath,
+              }}
+              style={styles.image}
+            />
+          </TouchableOpacity>
 
-        {imageTypes?.length > 0 ? (
-          <TouchableWithoutFeedback
-            onPress={() => ImagePicker()}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              gap: 1,
-            }}>
-            {imageTypes.map((item, index) => (
-              <Image
-                key={index}
-                source={{
-                  uri: item.uri,
-                }}
-                style={styles.image}
-              />
-            ))}
-          </TouchableWithoutFeedback>
-        ) : (
-          <>
-            <View style={styles.bodyImage}>
-              <TouchableOpacity onPress={() => ImagePicker()}>
-                <Image source={BODY_IMAGE.fileUpload1} style={styles.file} />
-              </TouchableOpacity>
-            </View>
-          </>
-        )}
+          <View></View>
+          {/* {editProductListItem?.item_media.map((item, index) => (
+            <Image
+              key={index}
+              source={{
+                uri: item.filepath,
+              }}
+              style={styles.image}
+            />
+          ))} */}
+        </View>
 
         {/* Video */}
-        {Object.keys(videoTypes).length ? (
-          <TouchableWithoutFeedback onPress={() => VideoPicker()}>
-            <Image
-              source={{uri: videoThumbNail?.path}}
-              style={styles.videoType}
-            />
-          </TouchableWithoutFeedback>
-        ) : (
-          <>
-            <TouchableWithoutFeedback
-              style={styles.bodyImage}
-              onPress={() => VideoPicker()}>
-              <View>
-                <Image source={BODY_IMAGE.fileUpload2} style={styles.file} />
-              </View>
-            </TouchableWithoutFeedback>
-          </>
-        )}
+        <TouchableOpacity style={styles.video}>
+          <VideoPlayer
+            video={{
+              uri:editProductListItem?.item_media[3]?.filepath,
+            }}
+            // videoWidth={10}
+            // videoHeight={20}
+            thumbnail={{uri: 'https://i.picsum.photos/id/866/1600/900.jpg'}}
+          />
+          {/* <Video
+            source={{uri: editProductListItem?.item_media[3]?.filepath}} // Can be a URL or a local file.
+            ref={ref => {
+              this.player = ref;
+            }} // Store reference
+            // onBuffer={this.onBuffer} // Callback when remote video is buffering
+            onError={()=>{}} // Callback when video cannot be loaded
+            // style={styles.backgroundVideo}
+          /> */}
+        </TouchableOpacity>
 
         <View></View>
 
@@ -254,8 +271,8 @@ const styles = StyleSheet.create({
   addItem: {
     color: COLOR.black,
     fontWeight: 'bold',
-marginVertical: HP(2),
-    marginLeft:10
+    marginVertical: HP(2),
+    marginLeft: 10,
   },
   headerComponent: {
     // paddingLeft:-100
@@ -309,8 +326,8 @@ marginVertical: HP(2),
     alignSelf: 'center',
     marginVertical: 10,
     resizeMode: 'cover',
-    width:"92%",
-    borderRadius:10
+    width: '92%',
+    borderRadius: 10,
   },
   bodyImage: {
     flexDirection: 'row',
@@ -318,17 +335,24 @@ marginVertical: HP(2),
     marginVertical: 10,
   },
   btn: {
-    paddingTop: HP(10),
+    marginTop: HP(28),
+    marginLeft:10
+  },
+  imageContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    // width:"20%",
   },
   image: {
-    width: WP(30),
+    width: WP(27),
     height: HP(15),
     maxWidth: WP(30),
     color: 'black',
+
     // paddingLeft:130
   },
   videoType: {
-    width: WP(94),
+    width: WP(84),
     height: HP(15),
     resizeMode: 'cover',
     borderRadius: 10,
@@ -340,8 +364,18 @@ marginVertical: HP(2),
     width: WP(90),
     resizeMode: 'stretch',
   },
-  header:{
-    width:"90%",
-    alignSelf:"center"
+  header: {
+    width: '90%',
+    alignSelf: 'center',
+  },
+  backgroundVideo: {
+    width: '1%',
+    height: '100%',
+  },
+  video:{
+    marginTop:HP(5),
+    width:WP(90,),
+    height:HP(4)
+    // marginLeft:-30
   }
 });

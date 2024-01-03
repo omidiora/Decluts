@@ -7,9 +7,17 @@ import {
   SectionList,
   StatusBar,
   Linking,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {COLOR, FontFamily, HP} from '../../Util/Util';
 import HeaderComponent from '../../component/HeaderComponent';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {useAppDispatch} from '../../redux/hook';
+import {setCredential} from '../../redux/auth';
+import {useAsyncStorage} from '@react-native-async-storage/async-storage';
+import {AlertNofity, AlertNofityError, notify, notifySucess} from '../../Util/notify';
+import { useNavigation } from '@react-navigation/native';
 
 const Profile_Item = [
   {
@@ -60,7 +68,7 @@ const Profile_Item = [
 
 const sendOnWhatsApp = () => {
   console.log('test');
-  let msg = 's';
+  let msg = 'The Contact Number for your product!';
   let mobile = '08067031917';
 
   if (mobile) {
@@ -80,6 +88,7 @@ const sendOnWhatsApp = () => {
     console.log('Please insert mobile no');
   }
 };
+
 const FlatListItemSeparator = () => {
   return (
     //Item Separator
@@ -88,6 +97,35 @@ const FlatListItemSeparator = () => {
 };
 
 const ProfileScreen = ({navigation}) => {
+  const dispatch = useAppDispatch();
+  const navigatio=useNavigation();
+
+  const {removeItem} = useAsyncStorage('@declut_user');
+
+  const AlertLogout = () => {
+    Alert.alert('Logout', 'Confirm you want to logout', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => LogoutAction()},
+    ]);
+  };
+
+  const LogoutAction = async () => {
+    console.log('lml')
+    try {
+      await removeItem();
+      AlertNofity('Logout', 'Logout Successfully');
+      navigation.navigate("Auth")
+    } catch (e) {
+      console.log(e,'aldmalmld')
+      AlertNofityError('Logout', 'Something Went Wrong. Try again');
+      // remove error
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View>
@@ -118,6 +156,22 @@ const ProfileScreen = ({navigation}) => {
             paddingTop: 10,
             marginHorizontal: 16,
           }}
+          ListFooterComponent={() => (
+            <>
+              <TouchableOpacity
+                style={styles.logoutContainer}
+                onPress={() => AlertLogout()}>
+                <View>
+                  <FontAwesome5
+                    name="door-open"
+                    size={15}
+                    color={COLOR.mainColor}
+                  />
+                </View>
+                <Text style={styles.logout}>LOGOUT</Text>
+              </TouchableOpacity>
+            </>
+          )}
         />
       </View>
     </View>
@@ -165,5 +219,19 @@ const styles = StyleSheet.create({
     height: 0.5,
     width: '100%',
     backgroundColor: '#C8C8C8',
+  },
+  logoutContainer: {
+    marginTop: 30,
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+    backgroundColor: 'white',
+    padding: 15,
+    borderRadius: 1,
+  },
+  logout: {
+    fontFamily: FontFamily.regular,
+    color: COLOR.mainColor,
+    marginLeft: 5,
+    fontWeight: 'bold',
   },
 });

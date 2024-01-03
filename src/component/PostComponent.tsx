@@ -40,6 +40,7 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import {SheetManager} from 'react-native-actions-sheet';
 import ModalComponent from '../Screen/Home/component/ModalComponent';
 import ItemActionModal from './ItemActionModal';
+import Location from '../assets/images/svg/location.svg'
 
 interface PostComponentProps {
   postData: {
@@ -70,10 +71,17 @@ const PostComponent = ({
     dispatch(fetchApiData());
   }, [dispatch]);
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const onRefresh = () => {
+    dispatch(fetchApiData());
+    //set isRefreshing to true
+    setIsRefreshing(true);
+    // callApiMethod()
+    // and set isRefreshing to false at the end of your callApiMethod()
+  };
 
-  
-  
-  
+  // console.log(postData, 'postData');
+
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       {loading ? (
@@ -90,6 +98,8 @@ const PostComponent = ({
             showsVerticalScrollIndicator={false}
             data={postData}
             contentContainerStyle={{paddingBottom: HP(1)}}
+            // onRefresh={onRefresh}
+            // refreshing={isRefreshing}
             renderItem={({item}) => {
               return (
                 <View style={styles.rowItem}>
@@ -119,15 +129,15 @@ const PostComponent = ({
                       {''}
                       {currencyFormatter(item.price)}
                     </Text>
-                    <Text style={styles.location}>
-                      <FontAwesome6
-                        name="location-dot"
-                        color={'#DB242D'}
-                        size={15}
-                        style={{paddingLeft: 110}}
-                      />{' '}
-                      {item.area} {item.state}
-                    </Text>
+                    <View style={{flexDirection:'row',paddingTop:5}}>
+                    <View style={{marginTop:2}}>
+                    <Location/>
+                    </View>
+                      <Text   style={styles.location}> {item.area} {item.state}</Text>
+                    </View>
+                    {/* <Text style={styles.location}>
+                      <Location /><Text> {item.area} {item.state}</Text>
+                    </Text> */}
                     <Text style={styles.date}>Posted {item.listed}</Text>
                   </View>
                   {showIcon && (
@@ -165,7 +175,6 @@ const PostComponent = ({
         item={ItemValue}
         onClose={() => setModalVisible(false)}
         setModalVisible={() => setModalVisible(false)}
-       
       />
     </View>
   );
@@ -209,8 +218,8 @@ const styles = StyleSheet.create({
     color: COLOR.black,
   },
   location: {
-    marginVertical: 2,
-    marginLeft: -HP(0.3),
+    // marginVertical: 2,
+    marginLeft: -HP(0.2),
     color: COLOR.lightGrey,
     fontFamily: FontFamily.bold,
   },

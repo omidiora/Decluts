@@ -37,8 +37,7 @@ const Register = () => {
     }
   });
 
-  console.log(errors, 'error');
-  return (
+   return (
     <KeyboardAwareScrollView
       style={{flex: 1, backgroundColor: COLOR.white}}
       contentContainerStyle={styles.input}>

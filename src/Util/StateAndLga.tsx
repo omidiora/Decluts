@@ -7,6 +7,9 @@ export const StateInNigeria = [
     { label: "Anambra", value: "Anambra" },
     { label: "Bauchi", value: "Bauchi" },
     { label: "Bayelsa", value: "Bayelsa" },
+
+
+
     { label: "Benue", value: "Benue" },
     { label: "Borno", value: "Borno" },
     { label: "Cross River", value: "Cross River" },
@@ -15,6 +18,16 @@ export const StateInNigeria = [
     { label: "Edo", value: "Edo" },
     { label: "Ekiti", value: "Ekiti" },
     { label: "Enugu", value: "Enugu" },
+
+
+
+
+
+
+
+
+
+    
     { label: "Gombe", value: "Gombe" },
     { label: "Imo", value: "Imo" },
     { label: "Jigawa", value: "Jigawa" },

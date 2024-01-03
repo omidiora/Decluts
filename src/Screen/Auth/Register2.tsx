@@ -10,6 +10,7 @@ import {EmailandPhoneSchema} from './Validation/main';
 import HeaderComponent from '../../component/HeaderComponent';
 import { useLoginMutation } from '../../redux/auth/api';
 import { useNavigation } from '@react-navigation/native';
+import ViewContainer from '../../component/ViewContainer';
 
 interface AuthFunctionParam{
   email:string,
@@ -40,9 +41,9 @@ const Register2 = () => {
   return (
     // EmailandPhoneSchema
     <KeyboardAwareScrollView style={styles.container}>
-      <View style={{width:"86%",alignSelf:'center', marginTop:40}}>
-      <HeaderComponent rightComponent={true} rightText={"Sign In"} />
-      </View>
+     <ViewContainer>
+     <HeaderComponent rightComponent={true} rightText={"Sign In"} />
+
       <View style={styles.subContainer}>
         <Image source={BODY_IMAGE.logo} style={styles.logo} />
         <Text style={styles.spam}>We will never spam you.</Text>
@@ -102,6 +103,7 @@ const Register2 = () => {
           )
         )}
       </Formik>
+     </ViewContainer>
     </KeyboardAwareScrollView>
   );
 };

@@ -13,7 +13,7 @@ const MyPost = () => {
   const dispatch = useAppDispatch();
   const {data, loading, error, myPost} = useAppSelector(state => state.product);
 
- 
+//  console.log(data,'adlmaldm')
 
   React.useEffect(() => {
     dispatch(MyPostItem());
@@ -23,6 +23,7 @@ const MyPost = () => {
 
   return (
     <View style={styles.container}>
+    
       <PostComponent postData={myPost?.data} showIcon={true} />
       <View style={styles.bodyImage}></View>
     </View>

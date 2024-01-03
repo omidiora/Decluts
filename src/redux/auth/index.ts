@@ -69,6 +69,7 @@ export const useSelectCurrentUser = (
   state: RootState
 ): User | null | undefined => state;
 
+
 export const useIsLoading = (state: RootState): boolean | undefined =>
   state.auth.isLoading;
   

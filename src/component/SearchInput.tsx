@@ -38,17 +38,17 @@ const SearchInput = ({title, placeholder, onChangeText, onSubmitEditing}) => {
   };
 
   return (
-    <View>
+    <View style={{marginLeft:10}}>
       <Text style={[styles.searchText,showCancel &&{marginLeft:-4}]}>Search</Text>
       <View style={[styles.flexDirection]}>
         <View style={styles.flexDirection}>
           <View style={styles.searchIcon}>
-            <FontAwesomeIcon name="search" size={20} style={styles.icon} />
+            <FontAwesomeIcon name="search" size={20} style={styles.icon} color={'black'}/>
           </View>
           <TextInput
             // value={text}
             placeholder={placeholder}
-            style={[styles.input, showCancel && {width: WP(75)}]}
+            style={[styles.input, showCancel && {marginLeft:WP(-1),width:WP(80),}]}
             autoCapitalize="none"
             onChangeText={onChangeText}
             onFocus={() => setshowCancel(true)}
@@ -79,23 +79,24 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 0.7,
-    width: WP(80),
+    width: WP(90),
     borderRadius: WP(3),
     borderColor: 'grey',
     // marginVertical: 10,
     paddingLeft: 50,
     // marginLeft: WP(-3),
-    height: HP(5),
+    height: HP(6.3),
+    backgroundColor:"#E4E7EC"
     // zIndex:100
   },
   searchIcon: {
     position: 'absolute',
-    left: WP(7),
-    top: HP(1.81),
+    left: WP(1),
+    top: HP(2.5),
   },
   cancel: {
     paddingTop: HP(2),
-    marginLeft: 30,
+    marginLeft: 35,
   },
   cancelText: {
     fontWeight: 'bold',
@@ -114,10 +115,10 @@ const styles = StyleSheet.create({
     fontSize: WP(4.5),
     fontWeight: 'bold',
     color: COLOR.black,
-    marginLeft: 20,
     marginVertical: 10,
   },
   icon: {
     marginTop: -4,
+    zIndex:100
   },
 });

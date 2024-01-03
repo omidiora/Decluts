@@ -18,6 +18,7 @@ import {
   updateItemSuccess2,
 } from '../../../redux/product/api';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import DropDownSelect from '../../../component/DropDownSelect';
 
 const data = [
   {id: 1, label: 'Electronic', value: '1'},
@@ -76,6 +77,10 @@ const AddItem2 = () => {
           rightComponent={true}
           title="Add Item"
           rightText={'2/4'}
+          showStep={true}
+          step1={true}
+          step2={true}
+
         />
       </View>
       <KeyboardAwareScrollView contentContainerStyle={{paddingBottom: 1310}}>
@@ -96,98 +101,79 @@ const AddItem2 = () => {
             errors,
             setFieldValue,
           }) => (
-            console.log(errors),
-            (
-              <View style={styles.subContainer}>
-                <Text style={styles.text}>Select Category</Text>
-                <Dropdown
-                  style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
-                  placeholderStyle={styles.placeholderStyle}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  inputSearchStyle={styles.inputSearchStyle}
-                  iconStyle={styles.iconStyle}
-                  data={data}
-                  maxHeight={300}
-                  minHeight={100}
-                  labelField="label"
-                  valueField="value"
-                  // searchField="search"
-                  placeholder={!isFocus ? 'Select Category' : '...'}
-                  searchPlaceholder="Search..."
-                  value={value}
-                  onFocus={() => setIsFocus(true)}
-                  onBlur={() => setIsFocus(false)}
-                  onChange={e => setFieldValue('category', e.value)}
-                  renderLeftIcon={() => <></>}
+            // console.log(errors),
+            <View style={styles.subContainer}>
+              <DropDownSelect
+                placeholder={'Select Category'}
+                onChange={e => setFieldValue('category', e.value)}
+                title={'Select Category'}
+                data={data}
+                error={errors.category}
+              />
+
+              <View style={styles.FormInput}>
+                <FormInput
+                  placeholder="e.g HP"
+                  label="Brand"
+                  onChangeText={handleChange('brand')}
+                  error={errors.brand}
                 />
-                <Text style={{color: 'red'}}>{errors.category}</Text>
+              </View>
 
-                <View style={styles.FormInput}>
-                  <FormInput
-                    placeholder="e.g HP"
-                    label="Brand"
-                    onChangeText={handleChange('brand')}
-                    error={errors.brand}
-                  />
-                </View>
-
+              <View
+                style={{
+                  marginVertical: 30,
+                }}>
+                <Text style={styles.text}>
+                  Does the item have any defect(s)
+                </Text>
                 <View
                   style={{
-                    marginVertical: 30,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    width: '40%',
+                    marginVertical: 10,
                   }}>
-                  <Text style={styles.text}>
-                    Does the item have any defect(s)
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      width: '40%',
-                      marginVertical: 10,
-                    }}>
-                    {DefectIMap.map(item => (
-                      <TouchableWithoutFeedback
-                        style={{flexDirection: 'row'}}
-                        onPress={() => setFieldValue('selectedId', item.title)}>
-                        {/*   onChange={e => setFieldValue('category', e.value)} */}
-                        <MaterialCommunityIcons
-                          name={
-                            values.selectedId == item.title
-                              ? 'checkbox-blank-circle'
-                              : 'checkbox-blank-circle-outline'
-                          }
-                          size={30}
-                          color={COLOR.mainColor}
-                        />
-                        <View>
-                          <Text style={styles.title}>{item.title}</Text>
-                        </View>
-                      </TouchableWithoutFeedback>
-                    ))}
-                  </View>
-                  <Text style={{marginTop: 10, color: 'red'}}>
-                    {errors.selectedId}
-                  </Text>
-                  {values.selectedId == 'Yes' && (
-                    <>
-                      <FormInput
-                        placeholder="Defect(issue)"
-                        label="Defect(issue)"
-                        multiline={true}
-                        onChangeText={text =>
-                          setFieldValue('defectReason', text)
+                  {DefectIMap.map(item => (
+                    <TouchableWithoutFeedback
+                      style={{flexDirection: 'row'}}
+                      onPress={() => setFieldValue('selectedId', item.title)}>
+                      {/*   onChange={e => setFieldValue('category', e.value)} */}
+                      <MaterialCommunityIcons
+                        name={
+                          values.selectedId == item.title
+                            ? 'checkbox-blank-circle'
+                            : 'checkbox-blank-circle-outline'
                         }
-                        error={errors.defectReason}
+                        size={30}
+                        color={COLOR.mainColor}
                       />
-                    </>
-                  )}
+                      <View>
+                        <Text style={styles.title}>{item.title}</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  ))}
                 </View>
-
-                <View>
-                  <FormButton btnTitle="Next" onPress={() => handleSubmit()} />
-                </View>
+                <Text style={{marginTop: 10, color: 'red'}}>
+                  {errors.selectedId}
+                </Text>
+                {values.selectedId == 'Yes' && (
+                  <>
+                    <FormInput
+                      placeholder="Defect(issue)"
+                      label="Defect(issue)"
+                      multiline={true}
+                      onChangeText={text => setFieldValue('defectReason', text)}
+                      error={errors.defectReason}
+                    />
+                  </>
+                )}
               </View>
-            )
+
+              <View>
+                <FormButton btnTitle="Next" onPress={() => handleSubmit()} />
+              </View>
+            </View>
           )}
         </Formik>
       </KeyboardAwareScrollView>
@@ -201,6 +187,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLOR.white,
+    // alignSelf:'center',
+   
   },
   addItem: {
     color: COLOR.black,
@@ -211,8 +199,8 @@ const styles = StyleSheet.create({
     // paddingLeft:-100
   },
   subContainer: {
-    paddingLeft: WP(4),
-    paddingTop: HP(5),
+    paddingLeft: WP(5),
+    paddingTop: HP(1),
   },
   dropdown: {
     height: 50,
@@ -237,7 +225,7 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 12,
-    fontFamily:FontFamily.regular
+    fontFamily: FontFamily.regular,
   },
   selectedTextStyle: {
     fontSize: 16,
@@ -260,7 +248,7 @@ const styles = StyleSheet.create({
     color: COLOR.black,
   },
   header: {
-    marginTop: HP(1),
+    // marginTop: HP(1),
     paddingHorizontal: 10,
   },
   text: {

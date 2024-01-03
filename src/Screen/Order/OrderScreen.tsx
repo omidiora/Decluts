@@ -24,12 +24,14 @@ import LineComponent from '../../component/ LineComponent';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FormButton from '../../component/FormButton';
 import moment from 'moment';
+import ViewContainer from '../../component/ViewContainer';
 
 const OrderScreen = ({route}) => {
   console.log(route?.params?.params?.user?.phone_number, 'r');
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.header}>
+     <ViewContainer>
+     <View >
         <HeaderComponent
           title={route?.params?.params?.order?.order_no}
           rightComponent={true}
@@ -139,6 +141,7 @@ const OrderScreen = ({route}) => {
           <FormButton btnTitle="Confirm Pickup" />
         </View>
       </View>
+     </ViewContainer>
     </ScrollView>
   );
 };
@@ -216,7 +219,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     borderColor: COLOR.lightDeepBlue,
     backgroundColor: '#E0F7F6',
-    marginLeft: -10,
+    marginLeft: -20,
   },
   text: {
     color: COLOR.black,
@@ -240,8 +243,9 @@ const styles = StyleSheet.create({
   dear: {
     marginTop: HP(2),
     backgroundColor: '#FEF0C7',
-    padding: 15,
+    padding: 20,
     borderRadius: 20,
+    marginLeft:-20
   },
   dark: {
     fontWeight: '500',

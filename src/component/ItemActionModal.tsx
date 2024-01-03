@@ -16,7 +16,11 @@ import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useAppDispatch, useAppSelector} from '../redux/hook';
-import {DeleteProduct, fetchApiData} from '../redux/product/api';
+import {
+  DeleteProduct,
+  editProductItemAction,
+  fetchApiData,
+} from '../redux/product/api';
 // furniture.svg
 
 interface ItemActionModalProps {
@@ -45,7 +49,7 @@ const ItemActionModal = ({
     });
   };
 
-  const {data, loading, error} = useAppSelector(state => state.product);
+  const {data, loading, error, } = useAppSelector(state => state.product);
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
@@ -60,15 +64,14 @@ const ItemActionModal = ({
   };
 
   const EditItem = item => {
+    dispatch(editProductItemAction(item));
     setModalVisible();
-    navigation.navigate("ProductNavigation",{
-      screen:"EditItem1",
-      params:{
+    navigation.navigate('ProductNavigation', {
+      screen: 'EditItem1',
+      params: {
         productDetails: item,
-      }
+      },
     });
-   
-
   };
   const pan = useRef(new Animated.ValueXY()).current;
 
@@ -104,9 +107,9 @@ const ItemActionModal = ({
         <Animated.View
           style={[styles.container, {transform: [{translateY: pan.y}]}]}
           {...panResponder.panHandlers}>
-          <TouchableOpacity style={{alignSelf: 'center', marginTop: HP(-2)}}>
+          <Animated.View style={{alignSelf: 'center', marginTop: HP(-2)}}>
             <MaterialIcons name="remove" size={50} color={COLOR.lightGrey} />
-          </TouchableOpacity>
+          </Animated.View>
           <TouchableOpacity style={styles.row} onPress={() => EditItem(item)}>
             <Feather name="edit" color={'black'} size={20} />
             <Text style={styles.edit}>Edit</Text>

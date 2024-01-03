@@ -18,6 +18,7 @@ import {
   StateAndCapital,
   StateInNigeria,
 } from '../../../Util/StateAndLga';
+import DropDownSelect from '../../../component/DropDownSelect';
 const data = [
   {label: 'Neatly Used (Old)', value: 'Neatly Used'},
   {label: 'New', value: 'New'},
@@ -44,7 +45,7 @@ const AddItem1 = () => {
     navigation.navigate('Item2');
   };
 
-  let scrollOffsetY = React.useRef(new Animated.Value(0)).current;
+
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <View style={styles.header}>
@@ -52,16 +53,18 @@ const AddItem1 = () => {
           rightComponent={true}
           title="Add Item"
           rightText={'1/4'}
+          showStep={true}
+          step1={true}
         />
       </View>
       <KeyboardAwareScrollView
         stickyHeaderIndices={[1]}
-       showsHorizontalScrollIndicator={false}
-       showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         style={styles.container}
         contentContainerStyle={{paddingBottom: 13, marginLeft: 10}}>
         <View style={styles.subContainer}>
-        <Text style={styles.basicInfo}>Basic Info</Text>
+          <Text style={styles.basicInfo}>Basic Info</Text>
           <Formik
             validationSchema={ItemSchema1}
             initialValues={{
@@ -80,7 +83,6 @@ const AddItem1 = () => {
               values,
               errors,
               setFieldValue,
-            
             }) => (
               <View style={styles.formInput}>
                 <FormInput
@@ -98,103 +100,28 @@ const AddItem1 = () => {
                   error={errors.description}
                 />
 
-                <View style={styles.dropItem}>
-                  <Text style={styles.label}>State</Text>
-                  <Dropdown
-                    style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    inputSearchStyle={styles.inputSearchStyle}
-                    iconStyle={styles.iconStyle}
-                    data={StateInNigeria}
-                    search={true}
-                    maxHeight={300}
-                    labelField="label"
-                    valueField="value"
-                    placeholder={!isFocus ? 'Select State' : '...'}
-                    searchPlaceholder="Search..."
-                    value={value}
-                    onFocus={() => setIsFocus(true)}
-                    onBlur={() => setIsFocus(false)}
-                    onChange={e => setFieldValue('state', e.value)}
-                    renderRightIcon={() => (
-                      <Entypo
-                        style={styles.icon}
-                        color={isFocus ? 'blue' : 'black'}
-                        name="chevron-thin-down"
-                        size={20}
-                      />
-                    )}
-                  />
-                  <Text style={styles.conditionError}>
-                    {errors.state}
-                  </Text>
-                </View>
+                <DropDownSelect
+                  placeholder={'Select State'}
+                  onChange={e => setFieldValue('state', e.value)}
+                  title={'State'}
+                  data={StateInNigeria}
+                  error={errors.state}
+                />
 
-                <View style={styles.dropItem}>
-                  <Text style={styles.label}>Area(Local Goverment)</Text>
-                  <Dropdown
-                    style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    inputSearchStyle={styles.inputSearchStyle}
-                    iconStyle={styles.iconStyle}
-                    data={LocalGoverment}
-                    search={true}
-                    maxHeight={300}
-                    labelField="label"
-                    valueField="value"
-                    placeholder={!isFocus ? 'Select Area' : '...'}
-                    searchPlaceholder="Search..."
-                    value={value}
-                    onFocus={() => setIsFocus(true)}
-                    onBlur={() => setIsFocus(false)}
-                    onChange={e => setFieldValue('area', e.value)}
-                    renderRightIcon={() => (
-                      <Entypo
-                        style={styles.icon}
-                        color={isFocus ? 'blue' : 'black'}
-                        name="chevron-thin-down"
-                        size={20}
-                      />
-                    )}
-                  />
-                  <Text style={styles.conditionError}>
-                    {errors.area }
-                  </Text>
-                </View>
-                <View style={styles.dropItem}>
-                  <Text style={styles.label}>Item Condition *</Text>
-                  <Dropdown
-                    style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    inputSearchStyle={styles.inputSearchStyle}
-                    iconStyle={styles.iconStyle}
-                    data={data}
-                    search={false}
-                    maxHeight={300}
-                    labelField="label"
-                    valueField="value"
-                    placeholder={!isFocus ? 'Select Condition' : '...'}
-                    searchPlaceholder="Search..."
-                    value={value}
-                    onFocus={() => setIsFocus(true)}
-                    onBlur={() => setIsFocus(false)}
-                    onChange={e => setFieldValue('condition', e.value)}
-                    renderRightIcon={() => (
-                      <Entypo
-                        style={styles.icon}
-                        color={isFocus ? 'blue' : 'black'}
-                        name="chevron-thin-down"
-                        size={20}
-                      />
-                    )}
-                  />
-                  <Text style={styles.conditionError}>
-                    {errors.condition }
-                  </Text>
-                </View>
+                <DropDownSelect
+                  placeholder={'Select Local Goverment'}
+                  onChange={e => setFieldValue('area', e.value)}
+                  title={'Area(Local Goverment)'}
+                  data={LocalGoverment}
+                  error={errors.area}
+                />
+                <DropDownSelect
+                  placeholder={'Select Condition'}
+                  onChange={e => setFieldValue('condition', e.value)}
+                  title={'Item Condition'}
+                  data={data}
+                  error={errors.condition}
+                />
 
                 <FormInput
                   label="Address *"
@@ -259,7 +186,7 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 12,
-    fontFamily:FontFamily.regular
+    fontFamily: FontFamily.regular,
   },
   selectedTextStyle: {
     fontSize: 16,
@@ -283,14 +210,15 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   header: {
-    marginTop: HP(3),
+    // marginTop: HP(3),
     width: '90%',
     marginLeft: 20,
+    height:HP(8)
   },
-  basicInfo:{
-    fontSize:WP(6.6),
+  basicInfo: {
+    fontSize: WP(6.6),
     //  fontWeight:'bold',
-    color:"#344054",
-    fontFamily:FontFamily.bold
-  }
+    color: '#344054',
+    fontFamily: FontFamily.bold,
+  },
 });

@@ -12,6 +12,7 @@ import HeaderComponent from '../../component/HeaderComponent';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import LineComponent from '../../component/ LineComponent';
+import ViewContainer from '../../component/ViewContainer';
 const SearchScreen = () => {
   const [searchKey, setSearchKey] = useState('');
   const dispatch = useAppDispatch();
@@ -34,16 +35,14 @@ const SearchScreen = () => {
     let word = data?.data?.data.filter(documents => {
       return documents.brand.toLowerCase().includes(searchKey.toLowerCase());
     });
+    console.log(word,'dlmaadafdlknfladsnlkfnkadsnkfndkdlmlf')
     setfilterWord(word);
   };
 
-  console.log(data?.data?.data, '1sd1');
 
+ console.log( searchKey,'searchHistory?.data')
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <HeaderComponent title="Search" rightComponent={true} />
-      </View>
+    <ViewContainer>
       <View style={styles.rowContainer}>
         <SearchInput
           placeholder={'What are you looking for?'}
@@ -51,17 +50,20 @@ const SearchScreen = () => {
           onSubmitEditing={() => searchWord()}
         />
         <View style={styles.paddLeft}>
-          <View style={styles.recent}>
-            <Text style={styles.recents}>Recent Searches</Text>
-            <TouchableOpacity onPress={() => {}}>
-              <Text style={styles.search}>Clear</Text>
-            </TouchableOpacity>
-          </View>
+          {searchHistory?.data > 0 && (
+            <View style={styles.recent}>
+              <Text style={styles.recents}>Recent Searches</Text>
+              <TouchableOpacity onPress={() => {}}>
+                <Text style={styles.search}>Clear</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
           <FlatList
             data={searchHistory?.data}
             renderItem={({item}) => (
               <TouchableOpacity
-                style={{paddingTop: HP(5), paddingBottom: 30}}
+                style={{paddingTop: HP(5), paddingBottom: 30,}}
                 onPress={() => setSearchKey(item?.keyword)}>
                 <LineComponent />
                 <View
@@ -110,7 +112,7 @@ const SearchScreen = () => {
           )}
         </View>
       </View>
-    </View>
+    </ViewContainer>
   );
 };
 
@@ -123,6 +125,7 @@ const styles = StyleSheet.create({
   },
   rowContainer: {
     alignSelf: 'center',
+    marginTop: -10,
   },
   recent: {
     flexDirection: 'row',
@@ -136,10 +139,11 @@ const styles = StyleSheet.create({
   search: {
     color: COLOR.mainColor,
     fontWeight: 'bold',
+    right: WP(7),
   },
   header: {
     paddingBottom: HP(3),
-    marginLeft:WP(5)
+    marginLeft: WP(5),
   },
   keyword: {
     fontSize: WP(4.3),
@@ -156,6 +160,7 @@ const styles = StyleSheet.create({
   },
   flatListContainer: {
     flex: 2,
-    marginTop: HP(-30),
+    marginTop: HP(-50),
+    marginLeft:-30
   },
 });

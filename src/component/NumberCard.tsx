@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {COLOR, HP} from '../Util/Util';
+import {COLOR, FontFamily, HP} from '../Util/Util';
 
 const NumberCard = ({number, title, content}: number) => {
   return (
@@ -23,11 +23,17 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: 'bold',
-    fontSize: HP(1.5),
+    fontSize: HP(2),
+    fontFamily:FontFamily.black,
+    color:"#101828",
+    textAlign: 'left'
+    // textAlign:"center"
   },
   subTitle: {
-    fontSize: HP(1.5),
-    color: COLOR.black,
-    paddingTop:HP(1)
+    fontSize: HP(1.7),
+    color: "#101828",
+    paddingTop:HP(1),
+    fontFamily:FontFamily.medium,
+
   },
 });

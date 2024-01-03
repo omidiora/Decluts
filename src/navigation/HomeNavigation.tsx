@@ -5,6 +5,7 @@ import {Text, View, Image, StyleSheet} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {BODY_IMAGE, COLOR, HP, WP} from '../Util/Util';
 import React from 'react';
+import Search from '../assets/images/svg/search.svg';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -28,7 +29,7 @@ const HomeNavigation = () => {
           },
           
         }}>
-        <Tab.Screen name="All items" component={AllItem}  />
+        <Tab.Screen name="All items" component={AllItem}   />
         <Tab.Screen name="My Posts" component={Post}  />
       </Tab.Navigator>
     </>

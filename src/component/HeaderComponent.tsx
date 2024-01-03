@@ -28,6 +28,11 @@ const HeaderComponent = ({
   rightComponent,
   rightText,
   rightFunc,
+  step1,
+  step2,
+  step3,
+  step4,
+  showStep,
   animatingWidthValues = [0, 1020],
 }) => {
   const navigation = useNavigation();
@@ -89,7 +94,12 @@ const HeaderComponent = ({
           </TouchableOpacity>
         )}
       </View>
-      <Animated.View style={animatedStyles} />
+      {showStep && <View style={{flexDirection:'row' ,paddingTop:34.5}}>
+      {step1 &&      <View style={{width:WP(30),backgroundColor:COLOR.mainColor,height:4,borderRadius:10,marginLeft:-20}}></View>}
+      {step2 &&      <View style={{width:WP(30),backgroundColor:COLOR.mainColor,height:4,borderRadius:10,marginLeft:-20}}></View>}
+      {step3 &&      <View style={{width:WP(30),backgroundColor:COLOR.mainColor,height:4,borderRadius:10,marginLeft:-20}}></View>}
+      {step4 &&      <View style={{width:WP(30),backgroundColor:COLOR.mainColor,height:4,borderRadius:10,marginLeft:-20}}></View>}
+      </View>}
     </View>
   );
 };
@@ -100,7 +110,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '99%',
+     width: WP(90),
+   
   },
   signIn: {
     paddingLeft: WP(-10),
