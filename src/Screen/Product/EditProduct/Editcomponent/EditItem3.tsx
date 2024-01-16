@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
   },
   subContainer: {
     paddingLeft: WP(4),
-    paddingTop: HP(2),
+     marginTop: HP(-3),
   },
   dropdown: {
     height: 50,
@@ -328,6 +328,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     width: '92%',
     borderRadius: 10,
+    marginLeft:-20
   },
   bodyImage: {
     flexDirection: 'row',
@@ -335,7 +336,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   btn: {
-    marginTop: HP(28),
+    marginTop: HP(32),
     marginLeft:10
   },
   imageContainer: {
@@ -348,6 +349,7 @@ const styles = StyleSheet.create({
     height: HP(15),
     maxWidth: WP(30),
     color: 'black',
+    borderRadius:6
 
     // paddingLeft:130
   },

@@ -1,12 +1,12 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 
-const LineComponent = () => {
+const LineComponent = ({width}) => {
   return (
     <View
       style={{
         borderBottomColor: '#D0D5DD',
-        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomWidth:width ? width:StyleSheet.hairlineWidth ,
       }}
     />
   );

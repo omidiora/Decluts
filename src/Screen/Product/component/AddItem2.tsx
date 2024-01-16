@@ -103,13 +103,15 @@ const AddItem2 = () => {
           }) => (
             // console.log(errors),
             <View style={styles.subContainer}>
-              <DropDownSelect
+             <View style={{width:WP(98.8)}}>
+             <DropDownSelect
                 placeholder={'Select Category'}
                 onChange={e => setFieldValue('category', e.value)}
                 title={'Select Category'}
                 data={data}
                 error={errors.category}
               />
+             </View>
 
               <View style={styles.FormInput}>
                 <FormInput
@@ -200,7 +202,7 @@ const styles = StyleSheet.create({
   },
   subContainer: {
     paddingLeft: WP(5),
-    paddingTop: HP(1),
+     marginTop: HP(-3),
   },
   dropdown: {
     height: 50,

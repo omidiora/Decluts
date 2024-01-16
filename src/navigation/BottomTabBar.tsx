@@ -49,7 +49,7 @@ const BottomTabNavigation = () => {
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color, focused}) => (
-            <HomeIcon style={{ color: focused? COLOR.mainColor:COLOR.black}}/>
+            <HomeIcon style={{ color: focused? COLOR.mainColor:COLOR.black ,}}/>
           ),
         }}
       />

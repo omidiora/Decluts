@@ -22,3 +22,8 @@ export const ErrorCheckPath = (response, message, navigation, path) => {
     );
   }
 };
+
+
+export const Kobolized = (balance) => {
+  return Number(balance / 100).toFixed(2);
+};

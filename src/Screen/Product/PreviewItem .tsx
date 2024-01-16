@@ -25,6 +25,7 @@ import {orderPaymentApi} from '../../redux/payment/api';
 import uuid from 'uuid-random';
 import VideoPlayer from 'react-native-video';
 import ViewContainer from '../../component/ViewContainer';
+import LineComponent from '../../component/ LineComponent';
 
 const PreviewItem = ({route: {params},showInterest}) => {
   const width = Dimensions.get('window').width;
@@ -54,12 +55,18 @@ const PreviewItem = ({route: {params},showInterest}) => {
 
   console.log(params?.showInterest,'lamldml')
   return (
+    <View style={{flex:1,backgroundColor:COLOR.white}}>
+    <View >
+        <HeaderComponent rightComponent={' '} title={params?.item?.item_name} />
+      </View>
+  <View style={{width:WP(300), marginLeft:-30 , marginTop:-40}}>
+  <LineComponent width={0.7} />
+  </View>
     <ScrollView style={styles.container}
      contentContainerStyle={{paddingBottom:130}}>
       <ViewContainer>
-      <View >
-        <HeaderComponent rightComponent={' '} title={params?.item?.item_name} />
-      </View>
+      
+      
       <View style={{paddingTop: 30}}>
         <Carousel
           layout={'stack'}
@@ -182,7 +189,7 @@ const PreviewItem = ({route: {params},showInterest}) => {
         </View>
       </View>
       </ViewContainer>
-    </ScrollView>
+    </ScrollView></View>
   );
 };
 

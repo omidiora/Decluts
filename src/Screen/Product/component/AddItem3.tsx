@@ -337,10 +337,11 @@ const styles = StyleSheet.create({
     marginLeft: WP(5),
   },
   image: {
-    width: WP(30),
-    height: HP(15),
+    width: WP(24),
+    height: HP(20),
     maxWidth: WP(30),
     color: 'black',
+    resizeMode:"contain"
     // paddingLeft:130
   },
   videoType: {

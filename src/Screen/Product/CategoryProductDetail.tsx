@@ -10,6 +10,7 @@ import {useAppDispatch, useAppSelector} from '../../redux/hook';
 import {fetchApiData, fetchCategoryProductById} from '../../redux/product/api';
 import Feather from 'react-native-vector-icons/Feather';
 import HeaderComponent from '../../component/HeaderComponent';
+import ViewContainer from '../../component/ViewContainer';
 
 const CategoryProductDetail = props => {
   const [searchKey, setSearchKey] = useState('Keyword');
@@ -43,7 +44,8 @@ const CategoryProductDetail = props => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+     <ViewContainer>
+     <View style={styles.header}>
         <HeaderComponent title={params.categoryTitle} rightComponent={' '} />
       </View>
       <View style={styles.rowContainer}>
@@ -67,6 +69,7 @@ const CategoryProductDetail = props => {
           />
         </View>
       </View>
+     </ViewContainer>
     </View>
   );
 };
@@ -80,14 +83,14 @@ const styles = StyleSheet.create({
   },
   rowContainer: {
     alignSelf: 'center',
-    paddingTop: HP(3),
+    // paddingTop: HP(3),
   },
   recent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingTop: HP(4),
     width:"92%",
-    marginLeft:WP(70)
+    marginLeft:WP(55)
   },
   recents: {
     color: COLOR.black,

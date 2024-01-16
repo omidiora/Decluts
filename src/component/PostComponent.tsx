@@ -41,6 +41,7 @@ import {SheetManager} from 'react-native-actions-sheet';
 import ModalComponent from '../Screen/Home/component/ModalComponent';
 import ItemActionModal from './ItemActionModal';
 import Location from '../assets/images/svg/location.svg'
+import { Kobolized } from '../Util';
 
 interface PostComponentProps {
   postData: {
@@ -127,7 +128,7 @@ const PostComponent = ({
                     <Text style={styles.price}>
                       {NAIRA_SYSMBOL}
                       {''}
-                      {currencyFormatter(item.price)}
+                      {currencyFormatter( Kobolized(item.price))}
                     </Text>
                     <View style={{flexDirection:'row',paddingTop:5}}>
                     <View style={{marginTop:2}}>

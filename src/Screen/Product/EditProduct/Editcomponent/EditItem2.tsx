@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   },
   subContainer: {
     paddingLeft: WP(5),
-    paddingTop: HP(5),
+    paddingTop:HP(-22),
   },
   dropdown: {
     height: 50,

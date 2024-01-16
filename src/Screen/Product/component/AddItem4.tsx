@@ -1,23 +1,29 @@
-import {StyleSheet, Text, View, Platform} from 'react-native';
-import React from 'react';
+import {StyleSheet, Text, View, Platform, Animated} from 'react-native';
+import React, {useState} from 'react';
 import ViewContainer from '../../../component/ViewContainer';
 import HeaderComponent from '../../../component/HeaderComponent';
-import {COLOR, HP, WP} from '../../../Util/Util';
+import {COLOR, FontFamily, HP, WP} from '../../../Util/Util';
 import FormInput from '../../../component/FormInput';
 import {Formik} from 'formik';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import FormButton from '../../../component/FormButton';
 import {Dropdown} from 'react-native-element-dropdown';
-import {number} from 'yup';
-import {useNavigation} from '@react-navigation/native';
+import Entypo from 'react-native-vector-icons/Entypo';
+import {ItemSchema1} from '../Validation';
 import {useDispatch, useSelector} from 'react-redux';
+import {updateItemSuccess, updateItemSuccess4} from '../../../redux/product/api';
+import {useNavigation} from '@react-navigation/native';
 import {
-  upCreateProductApi,
-  updateItemSuccess,
-  updateItemSuccess4,
-} from '../../../redux/product/api';
-
-import Pricing from '../../../assets/images/pricing.svg';
+  LocalGoverment,
+  StateAndCapital,
+  StateInNigeria,
+} from '../../../Util/StateAndLga';
+import DropDownSelect from '../../../component/DropDownSelect';
+import AuthNavigation from '../../../navigation/AuthNavigation';
+const data = [
+  {label: 'Neatly Used (Old)', value: 'Neatly Used'},
+  {label: 'New', value: 'New'},
+];
 
 const AddItem4 = () => {
   const [discountPice, setDiscountPice] = React.useState<number>(0);
@@ -39,69 +45,65 @@ const AddItem4 = () => {
     setDiscountPice(num - Number(value));
     return value;
   };
-  return (
-    <View style={styles.container}>
-      <HeaderComponent
-        animatingWidthValues={[0, 111]}
-        title="Upload Item"
-        rightComponent={true}
-        rightText={'4/4'}
-        showStep={true}
-        step1={true}
-        step2={true}
-        step3={true}
-        step4={true}
-      />
-      <KeyboardAwareScrollView contentContainerStyle={{paddingBottom: 10}}>
-        <View style={styles.subContainer}>
-          <View style={styles.header}></View>
-          <Formik
-            // validationSchema={EmailandPhoneSchema}
-            initialValues={{price: ''}}
-            // onSubmit={values => AuthNavigation(values)}
-          >
-            {({handleChange, handleBlur, handleSubmit, values, errors}) => (
-              <View style={styles.formInput}>
-                <View>
-                  <Text style={styles.addItem}>Pricing</Text>
-                  <View
-                    style={{
-                      alignSelf: 'center',
-                      marginLeft: 10,
-                      paddingBottom: 50,
-                    }}>
-                    <Pricing
-                      width={WP(95)}
-                      height={HP(11)}
-                      style={{
-                        alignSelf: 'center',
 
-                        paddingBottom: 50,
-                        marginLeft: -50,
-                      }}
-                    />
-                  </View>
-                </View>
-                <View style={{marginTop: -50}}>
-                  <FormInput
-                    value={values.price}
-                    label="Enter price *"
-                    placeholder="Enter 2500 *"
-                    onChangeText={handleChange('price')}
-                    handleBlur={Eightpercentage(values.price)}
-                  />
-                  <FormInput
-                    label="You’ll get *"
-                    placeholder="Enter 2500 *"
-                    onChangeText={() => {}}
-                    value={String(discountPice)}
-                  />
-                  <View style={{marginTop:220}}>
-                  <FormButton
+  return (
+    <View style={{flex: 1, backgroundColor: 'white'}}>
+      <View style={styles.header}>
+        <HeaderComponent
+          rightComponent={true}
+          title="Add Item"
+          rightText={'4/4'}
+          showStep={true}
+          step1={true}
+          step2={true}
+          step3={true}
+          step4={true}
+        />
+      </View>
+      <KeyboardAwareScrollView
+        stickyHeaderIndices={[1]}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        style={styles.container}
+        contentContainerStyle={{paddingBottom: 13, marginLeft: 10}}>
+        <View style={styles.subContainer}>
+          <Text style={styles.basicInfo}>Pricing</Text>
+          <Formik
+            // validationSchema={ItemSchema1}
+            initialValues={{
+              price:'',
+            }}
+            onSubmit={values => AuthNavigation(values)}>
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              setFieldValue,
+            }) => (
+              <View style={styles.formInput}>
+                <FormInput
+                  value={values.price}
+                  label="Enter price *"
+                  placeholder="Enter 2500 *"
+                  onChangeText={handleChange('price')}
+                  handleBlur={Eightpercentage(values.price)}
+                />
+
+                <FormInput
+                 label="You’ll get *"
+                 placeholder="Enter 2500 *"
+                 onChangeText={() => {}}
+                 value={String(discountPice)}
+                />
+
+
+                <View style={styles.btn}>
+                <FormButton
                     btnTitle="Preview"
                     onPress={() => CreateItemFunction(values)}
                   />
-                  </View>
                 </View>
               </View>
             )}
@@ -122,21 +124,74 @@ const styles = StyleSheet.create({
   addItem: {
     color: COLOR.black,
     fontWeight: 'bold',
-     paddingBottom: HP(0.5),
-    fontSize: WP(5),
+    paddingBottom: HP(4),
   },
   headerComponent: {
     // paddingLeft:-100
   },
   subContainer: {
-    paddingLeft: WP(4),
-    paddingTop: HP(1.4),
+    paddingLeft: WP(3),
+    paddingTop: HP(2),
+    width: WP(104),
+  },
+  dropdown: {
+    height: 50,
+    borderColor: 'grey',
+
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    backgroundColor: '#E4E7EC',
+    width: '90%',
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    paddingBottom: 10,
+    color: COLOR.black,
+    // position: 'absolute',
+    // backgroundColor: 'white',
+    // left: 22,
+    // top: 8,
+    // zIndex: 999,
+    // paddingHorizontal: 8,
+    // fontSize: 14,
+  },
+  placeholderStyle: {
+    fontSize: 12,
+    fontFamily: FontFamily.regular,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+    borderWidth: 0,
+  },
+  btn: {
+    marginTop: HP(35),
+  },
+  dropItem: {
+    paddingTop: HP(3),
+  },
+  conditionError: {
+    color: 'red',
   },
   header: {
-    paddingHorizontal: 10,
+    // marginTop: HP(3),
+    width: '90%',
+    marginLeft: 20,
+    height:HP(8)
   },
-  formInput: {
-    width: '107%',
-    marginTop: HP(-2),
+  basicInfo: {
+    fontSize: WP(6.6),
+    //  fontWeight:'bold',
+    color: '#344054',
+    fontFamily: FontFamily.bold,
   },
 });

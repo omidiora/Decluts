@@ -26,7 +26,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {upCreateProductApi} from '../../redux/product/api';
 import UploadNote from '../../assets/images/UploadNote.svg';
 
-
 Ionicons.loadFont();
 
 const UploadAllItem = () => {
@@ -62,140 +61,143 @@ const UploadAllItem = () => {
 
   console.log(item, 'adlmafl');
   return (
-  <ScrollView>
-      <View style={styles.container}>
-      <View style={styles.header}>
-        <HeaderComponent rightComponent={' '} title={'Preview'} />
-        <UploadNote
-                      width={WP(104)}
-                      height={HP(11)}
-                      style={{
-                        alignSelf: 'center',
+    <>
+      <HeaderComponent rightComponent={' '} title={'Preview'} />
 
-                        paddingBottom: 50,
-                        // marginLeft: -50,
-                      }}
-                    />
-      </View>
       <ScrollView>
-        <View style={{paddingTop: 30}}>
-          <Carousel
-            layout={'stack'}
-            data={item?.previewImage?.payload?.imageTypes}
-            sliderWidth={HP(50)}
-            itemWidth={HP(45)}
-            onSnapToItem={index => setActiveSlide(index)}
-            renderItem={({item, index}) => (
-              <>
-                <View style={{width: '120%'}}>
-                  <Image
-                    source={{uri: item?.uri}}
-                    style={{width: '100%', height: HP(30), right: 30}}
-                    resizeMode="stretch"
-                  />
-                </View>
-              </>
-            )}
-          />
-          <View
-            style={{
-              position: 'absolute',
-              top: HP(28),
-              alignSelf: 'center',
-              justifyContent: 'center',
-            }}>
-            <Pagination
-              dotsLength={3}
-              activeDotIndex={activeSlide}
-              containerStyle={{backgroundColor: 'transparent'}}
-              dotStyle={{
-                width: 10,
-                height: 10,
-                borderRadius: 5,
-                marginHorizontal: 8,
-                backgroundColor: 'black',
-                opacity: 100,
-                zIndex: 1,
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <UploadNote
+              width={WP(104)}
+              height={HP(11)}
+              style={{
+                alignSelf: 'center',
+
+                paddingBottom: 50,
+                marginLeft: -10,
               }}
-              inactiveDotStyle={
-                {
-                  // Define styles for inactive dots here
-                }
-              }
-              inactiveDotOpacity={0.1}
-              inactiveDotScale={0.6}
             />
           </View>
-        </View>
-        <View style={styles.subContainer}>
-          <View>
-            <Text style={styles.item_name}>{item?.item_name}</Text>
-
-            <View style={{flexDirection: 'row', marginTop: -10}}>
-              <Ionicons name="location-sharp" color={'#DB242D'} size={18} />
-              <Text style={styles.address}>
-                {item.address},{item?.state}
-              </Text>
+          <ScrollView>
+            <View style={{paddingTop: 30}}>
+              <Carousel
+                layout={'stack'}
+                data={item?.previewImage?.payload?.imageTypes}
+                sliderWidth={HP(50)}
+                itemWidth={HP(45)}
+                onSnapToItem={index => setActiveSlide(index)}
+                renderItem={({item, index}) => (
+                  <>
+                    <View style={{width: '120%'}}>
+                      <Image
+                        source={{uri: item?.uri}}
+                        style={{width: '100%', height: HP(30), right: 30}}
+                        resizeMode="stretch"
+                      />
+                    </View>
+                  </>
+                )}
+              />
+              <View
+                style={{
+                  position: 'absolute',
+                  top: HP(28),
+                  alignSelf: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Pagination
+                  dotsLength={3}
+                  activeDotIndex={activeSlide}
+                  containerStyle={{backgroundColor: 'transparent'}}
+                  dotStyle={{
+                    width: 10,
+                    height: 10,
+                    borderRadius: 5,
+                    marginHorizontal: 8,
+                    backgroundColor: 'black',
+                    opacity: 100,
+                    zIndex: 1,
+                  }}
+                  inactiveDotStyle={
+                    {
+                      // Define styles for inactive dots here
+                    }
+                  }
+                  inactiveDotOpacity={0.1}
+                  inactiveDotScale={0.6}
+                />
+              </View>
             </View>
+            <View style={styles.subContainer}>
+              <View>
+                <Text style={styles.item_name}>{item?.item_name}</Text>
 
-            <View>
-              <PostDetailComponent
-                leftTitle="Description"
-                rightTitle={item?.description}
-                flexDirection="column"
-              />
-              <PostDetailComponent
-                leftTitle="Brand:"
-                rightTitle={item?.brand}
-              />
-              <PostDetailComponent
-                leftTitle="Item Condition:"
-                rightTitle={item?.condition}
-              />
-              <PostDetailComponent
-                leftTitle="Defect:"
-                rightTitle={item?.defect}
-              />
+                <View style={{flexDirection: 'row', marginTop: -10}}>
+                  <Ionicons name="location-sharp" color={'#DB242D'} size={18} />
+                  <Text style={styles.address}>
+                    {item.address},{item?.state}
+                  </Text>
+                </View>
+
+                <View>
+                  <PostDetailComponent
+                    leftTitle="Description"
+                    rightTitle={item?.description}
+                    flexDirection="column"
+                  />
+                  <PostDetailComponent
+                    leftTitle="Brand:"
+                    rightTitle={item?.brand}
+                  />
+                  <PostDetailComponent
+                    leftTitle="Item Condition:"
+                    rightTitle={item?.condition}
+                  />
+                  <PostDetailComponent
+                    leftTitle="Defect:"
+                    rightTitle={item?.defect}
+                  />
+                </View>
+              </View>
+            </View>
+          </ScrollView>
+          <View
+            style={{
+              flex: 1.3,
+              backgroundColor: 'white',
+              marginTop: HP(-12),
+              // borderTopWidth: 1,
+              // backgroundColor: 'white',
+              elevation: 5,
+              shadowColor: 'grey',
+              shadowOffset: {width: 0, height: 0},
+              shadowOpacity: 0.1,
+              shadowRadius: 5,
+              borderColor: 'grey',
+              // height:HP(1)
+            }}>
+            <View style={styles.totalPriceContainer}>
+              <View>
+                <Text style={styles.totalPriceText}>Total Price</Text>
+                <Text style={styles.price}>
+                  {'\u20A6'}
+                  {item?.price}
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={styles.showContainer}
+                onPress={() => UploadItem()}>
+                {loading ? (
+                  <ActivityIndicator />
+                ) : (
+                  <Text style={styles.showText}>Upload</Text>
+                )}
+              </TouchableOpacity>
             </View>
           </View>
         </View>
       </ScrollView>
-      <View
-        style={{
-          flex: 1.3,
-          backgroundColor: 'white',
-           marginTop: HP(-12),
-          // borderTopWidth: 1,
-          // backgroundColor: 'white',
-          elevation: 5,
-          shadowColor: 'grey',
-          shadowOffset: {width: 0, height: 0},
-          shadowOpacity: 0.1,
-          shadowRadius: 5,
-          borderColor:"grey",
-          // height:HP(1)
-        }}>
-        <View style={styles.totalPriceContainer}>
-          <View>
-            <Text style={styles.totalPriceText}>Total Price</Text>
-            <Text style={styles.price}>
-              {'\u20A6'}
-              {item?.price}
-            </Text>
-          </View>
-          <TouchableOpacity
-            style={styles.showContainer}
-            onPress={() => UploadItem()}>
-            {loading ? (
-              <ActivityIndicator />
-            ) : (
-              <Text style={styles.showText}>Upload</Text>
-            )}
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
-  </ScrollView>
+    </>
   );
 };
 
@@ -253,11 +255,11 @@ const styles = StyleSheet.create({
   },
   showText: {
     textAlign: 'center',
-     alignSelf: 'center',
-     fontWeight: 'bold',
+    alignSelf: 'center',
+    fontWeight: 'bold',
     // marginLeft: -10,
-     fontSize: WP(3.5),
-     color: COLOR.white,
+    fontSize: WP(3.5),
+    color: COLOR.white,
     //  padding: 30,
     // paddingLeft:10
   },
