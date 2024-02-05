@@ -26,8 +26,9 @@ import uuid from 'uuid-random';
 import VideoPlayer from 'react-native-video';
 import ViewContainer from '../../component/ViewContainer';
 import LineComponent from '../../component/ LineComponent';
-
-const PreviewItem = ({route: {params},showInterest}) => {
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+const PreviewItem = ({route: {params}, showInterest}) => {
   const width = Dimensions.get('window').width;
   const [activeSlide, setActiveSlide] = useState(0);
   const entries = [];
@@ -53,87 +54,64 @@ const PreviewItem = ({route: {params},showInterest}) => {
     //
   };
 
-  console.log(params?.showInterest,'lamldml')
   return (
-    <View style={{flex:1,backgroundColor:COLOR.white}}>
-    <View >
-        <HeaderComponent rightComponent={' '} title={params?.item?.item_name} />
-      </View>
-  <View style={{width:WP(300), marginLeft:-30 , marginTop:-40}}>
-  <LineComponent width={0.7} />
-  </View>
-    <ScrollView style={styles.container}
-     contentContainerStyle={{paddingBottom:130}}>
-      <ViewContainer>
-      
-      
-      <View style={{paddingTop: 30}}>
-        <Carousel
-          layout={'stack'}
-          data={params?.item?.item_media}
-          sliderWidth={HP(50)}
-          itemWidth={HP(45)}
-          onSnapToItem={index => setActiveSlide(index)}
-          renderItem={({item, index}) => {
-            if (
-              item?.filepath?.endsWith('.jpg') ||
-              item?.filepath?.endsWith('.jpeg') ||
-              item?.filepath?.endsWith('.png')
-            ) {
-              return (
-                <Image
-                  source={{uri: item?.filepath}}
-                  style={{width: WP(102), height: HP(30), right: 30}}
-                />
-              );
-            } else if (item?.filepath?.endsWith('.mp4')) {
-              return (
-                <VideoPlayer
-                  disableFocus={true}
-                  muted={false}
-                  // key={item?.media?.id}
-                  source={{
-                    uri: item?.filepath,
-                  }}
-                  style={{width: WP(102), height: HP(30), right: 30}}
-                  controls={true}
-                />
-              );
+    <View style={styles.container}>
+      <Carousel
+        layout={'stack'}
+        data={params?.item?.item_media}
+        sliderWidth={HP(50)}
+        itemWidth={HP(45)}
+        onSnapToItem={index => setActiveSlide(index)}
+        renderItem={({item, index}) => {
+          if (
+            item?.filepath?.endsWith('.jpg') ||
+            item?.filepath?.endsWith('.jpeg') ||
+            item?.filepath?.endsWith('.png')
+          ) {
+            return (
+              <Image
+                source={{uri: item?.filepath}}
+                style={{
+                  width: WP(100),
+                  height: HP(50),
+                  right: 20,
+                  resizeMode: 'stretch',
+                }}
+              />
+            );
+          } else if (item?.filepath?.endsWith('.mp4')) {
+            return (
+              <VideoPlayer
+                disableFocus={true}
+                muted={false}
+                // key={item?.media?.id}
+                source={{
+                  uri: item?.filepath,
+                }}
+                style={{width: WP(100), height: HP(30), right: 30}}
+                controls={true}
+              />
+            );
+          }
+        }}
+      />
+
+      <View style={styles.dotPagin}>
+        <Pagination
+          dotsLength={params?.item?.item_media?.length}
+          activeDotIndex={activeSlide}
+          containerStyle={{backgroundColor: 'transparent'}}
+          dotStyle={styles.dotStyle}
+          inactiveDotStyle={
+            {
+              // Define styles for inactive dots here
             }
-          }}
+          }
+          inactiveDotOpacity={0.1}
+          inactiveDotScale={0.6}
         />
-        <View
-          style={{
-            position: 'absolute',
-            top: HP(31),
-            alignSelf: 'center',
-            justifyContent: 'center',
-            marginVertical: 10,
-          }}>
-          <Pagination
-            dotsLength={params?.item?.item_media?.length}
-            activeDotIndex={activeSlide}
-            containerStyle={{backgroundColor: 'transparent'}}
-            dotStyle={{
-              width: 20,
-              height: 20,
-              borderRadius: 10,
-              marginHorizontal: 8,
-              backgroundColor: COLOR.mainColor,
-              opacity: 100,
-              zIndex: 1,
-            }}
-            inactiveDotStyle={
-              {
-                // Define styles for inactive dots here
-              }
-            }
-            inactiveDotOpacity={0.1}
-            inactiveDotScale={0.6}
-          />
-        </View>
-      </View>
-      <View style={styles.subContainer}>
+
+        <View style={styles.subContainer}>
         <View>
           <Text style={styles.posted}>Posted {params?.item?.listed}</Text>
           <Text style={styles.item_name}>{params?.item?.item_name}</Text>
@@ -188,8 +166,8 @@ const PreviewItem = ({route: {params},showInterest}) => {
           </View>
         </View>
       </View>
-      </ViewContainer>
-    </ScrollView></View>
+      </View>
+    </View>
   );
 };
 
@@ -203,6 +181,24 @@ const styles = StyleSheet.create({
   posted: {
     color: '#A28300',
     fontWeight: 'bold',
+    fontFamily:FontFamily.regular,
+    fontSize:WP(5)
+  },
+  dotStyle:{
+    width: 40,
+    height: 20,
+    borderRadius: 10,
+    marginHorizontal: 8,
+    backgroundColor: COLOR.mainColor,
+    opacity: 100,
+    zIndex: 1,
+  },
+  dotPagin: {
+    position: 'absolute',
+    top: HP(42),
+    alignSelf: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
   },
   subContainer: {
     marginLeft: 30,
