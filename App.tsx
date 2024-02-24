@@ -68,7 +68,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <SafeAreaProvider>
+      <>
         <View style={styles.StatusBar}>
           <StatusBar
             hidden={false}
@@ -78,7 +78,7 @@ const App = () => {
           />
         </View>
         <AlertNotificationRoot>
-          <SafeAreaView style={{flex: 1}}>
+          <>
             <MenuProvider>
               <NavigationContainer>
                 <>
@@ -123,9 +123,9 @@ const App = () => {
                 </>
               </NavigationContainer>
             </MenuProvider>
-          </SafeAreaView>
+          </>
         </AlertNotificationRoot>
-      </SafeAreaProvider>
+      </>
     </Provider>
   );
 };

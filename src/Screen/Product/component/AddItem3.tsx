@@ -171,7 +171,7 @@ const AddItem3 = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <HeaderComponent
-          animatingWidthValues={[0, 111]} 
+          animatingWidthValues={[0, 111]}
           title="Upload Item"
           rightComponent={true}
           rightText={'3/4'}
@@ -182,17 +182,21 @@ const AddItem3 = () => {
         />
       </View>
 
-      <ProgressIndicator  visible={loading}/>
+      <ProgressIndicator visible={loading} />
       {/* <MessageModalComponent visible={true}/> */}
       <KeyboardAwareScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
         <View style={styles.subContainer}>
           <Text style={styles.addItem}>Media</Text>
-          <Note width={WP(700)} height={HP(11)} style={{
-            alignSelf:"center",
-            marginLeft:-20
-          }} />
+          <Note
+            width={WP(803)}
+            height={HP(11.85)}
+            style={{
+              alignSelf: 'center',
+              marginLeft: -2,
+            }}
+          />
           {/* <Image source={BODY_IMAGE.note} style={styles.img} /> */}
 
           {imageTypes?.length > 0 ? (
@@ -279,7 +283,7 @@ const styles = StyleSheet.create({
   },
   subContainer: {
     paddingLeft: WP(2),
-  marginTop: HP(-2.6),
+    marginTop: HP(-2.6),
   },
   dropdown: {
     height: 50,
@@ -334,14 +338,15 @@ const styles = StyleSheet.create({
   },
   btn: {
     paddingTop: HP(10),
-    marginLeft: WP(5),
+    marginLeft: WP(4),
+    width: WP(99),
   },
   image: {
     width: WP(24),
     height: HP(20),
     maxWidth: WP(30),
     color: 'black',
-    resizeMode:"contain"
+    resizeMode: 'contain',
     // paddingLeft:130
   },
   videoType: {
@@ -360,5 +365,8 @@ const styles = StyleSheet.create({
   header: {
     width: '90%',
     alignSelf: 'center',
+    height: HP(12),
+    // position:'absolute',
+    // marginTop:HP(4)
   },
 });

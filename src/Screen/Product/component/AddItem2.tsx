@@ -21,7 +21,7 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import DropDownSelect from '../../../component/DropDownSelect';
 
 const data = [
-  {id: 1, label: 'Electronic', value: '1'},
+  {id: 1, label: 'Electronice', value: '1'},
   {id: 2, label: 'Furniture', value: '2'},
   {id: 3, label: 'Sport & Outdoor', value: '3'},
   {id: 4, label: 'Babies & Kids', value: '4'},
@@ -80,8 +80,10 @@ const AddItem2 = () => {
           showStep={true}
           step1={true}
           step2={true}
-
         />
+      </View>
+      <View style={styles.itemCon}>
+        <Text style={styles.item}>Item Categorization</Text>
       </View>
       <KeyboardAwareScrollView contentContainerStyle={{paddingBottom: 1310}}>
         <Formik
@@ -103,15 +105,15 @@ const AddItem2 = () => {
           }) => (
             // console.log(errors),
             <View style={styles.subContainer}>
-             <View style={{width:WP(98.8)}}>
-             <DropDownSelect
-                placeholder={'Select Category'}
-                onChange={e => setFieldValue('category', e.value)}
-                title={'Select Category'}
-                data={data}
-                error={errors.category}
-              />
-             </View>
+              <View style={{width: WP(98.8)}}>
+                <DropDownSelect
+                  placeholder={'Select Category'}
+                  onChange={e => setFieldValue('category', e.value)}
+                  title={'Select Category'}
+                  data={data}
+                  error={errors.category}
+                />
+              </View>
 
               <View style={styles.FormInput}>
                 <FormInput
@@ -148,7 +150,7 @@ const AddItem2 = () => {
                             : 'checkbox-blank-circle-outline'
                         }
                         size={30}
-                        color={COLOR.mainColor}
+                        color={  values.selectedId == item.title?COLOR.mainColor : COLOR.black}
                       />
                       <View>
                         <Text style={styles.title}>{item.title}</Text>
@@ -172,7 +174,7 @@ const AddItem2 = () => {
                 )}
               </View>
 
-              <View>
+              <View style={styles.btn}>
                 <FormButton btnTitle="Next" onPress={() => handleSubmit()} />
               </View>
             </View>
@@ -190,7 +192,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLOR.white,
     // alignSelf:'center',
-   
   },
   addItem: {
     color: COLOR.black,
@@ -202,7 +203,7 @@ const styles = StyleSheet.create({
   },
   subContainer: {
     paddingLeft: WP(5),
-     marginTop: HP(-3),
+    marginTop: HP(-3),
   },
   dropdown: {
     height: 50,
@@ -252,8 +253,22 @@ const styles = StyleSheet.create({
   header: {
     // marginTop: HP(1),
     paddingHorizontal: 10,
+    height:HP(8)
   },
   text: {
     color: COLOR.black,
   },
+  btn: {
+    marginTop: HP(20),
+    width: WP(100),
+  },
+  itemCon:{
+    marginLeft:WP(4)
+  },
+  item:{
+    fontSize:WP(4),
+    color:COLOR.black,
+    fontFamily:FontFamily.bold,
+    marginVertical:20
+  }
 });

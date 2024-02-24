@@ -131,7 +131,7 @@ const PostComponent = ({
                       {currencyFormatter( Kobolized(item.price))}
                     </Text>
                     <View style={{flexDirection:'row',paddingTop:5}}>
-                    <View style={{marginTop:2}}>
+                    <View style={{marginTop:4}}>
                     <Location/>
                     </View>
                       <Text   style={styles.location}> {item.area} {item.state}</Text>
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   name: {
     flexShrink: 1,
     color: COLOR.lightGrey,
-    fontSize: WP(4.5),
+    fontSize: WP(4.6),
     fontFamily: FontFamily.medium,
   },
   textContainer: {
@@ -217,12 +217,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: 4,
     color: COLOR.black,
+    fontSize:WP(5)
   },
   location: {
     // marginVertical: 2,
-    marginLeft: -HP(0.2),
+    marginLeft: HP(0.3),
     color: COLOR.lightGrey,
     fontFamily: FontFamily.bold,
+    fontSize:WP(4)
   },
   date: {
     color: COLOR.lightOrange,

@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   placeholderStyle: {
-    fontSize: 12,
+    fontSize: 16,
     fontFamily: FontFamily.regular,
   },
   selectedTextStyle: {

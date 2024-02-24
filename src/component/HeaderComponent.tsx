@@ -83,7 +83,7 @@ const HeaderComponent = ({
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.icon}>
-          <Ionicons name="chevron-back" size={32}  />
+          <Ionicons name="chevron-back" size={32}   color={'#101828'}/>
         </TouchableOpacity>
         <View>
           <Text style={styles.create}>{title}</Text>
@@ -118,9 +118,9 @@ const styles = StyleSheet.create({
     paddingTop: HP(-1),
   },
   signInText: {
-    color: COLOR.mainColor,
+    color: COLOR.black,
     // fontWeight: 'bold',
-    fontSize: WP(3.5),
+    fontSize: WP(4.5),
     fontWeight: 'bold',
   },
 
