@@ -23,7 +23,6 @@ const CategoryProductDetail = props => {
     state => state.product,
   );
 
-  console.log(data, 'adada');
   //  const imageUrls = filterImageUrls(ImageOnly());
 
   // console.log('Image URLs:', imageUrls);
@@ -40,7 +39,7 @@ const CategoryProductDetail = props => {
     setfilterWord(word);
   };
 
-  // console.log(searchWord(),'1sd1')
+   console.log(category?.data,'1sd1')
 
   return (
     <View style={styles.container}>
@@ -49,14 +48,16 @@ const CategoryProductDetail = props => {
         <HeaderComponent title={params.categoryTitle} rightComponent={' '} />
       </View>
       <View style={styles.rowContainer}>
+        <View style={{marginLeft:30}}>
         <SearchInput
           placeholder={'What are you looking for?'}
           onChangeText={text => setSearchKey(text)}
           onSubmitEditing={() => searchWord()}
         />
+        </View>
         <View style={styles.recent}>
           <Text style={styles.recents}>
-            {category?.data?.data?.length || 0} total result
+            {category?.data?.length || 0} total result
           </Text>
           <TouchableOpacity onPress={() => {}}>
             <Feather name="settings" size={20} color={COLOR.black} />
@@ -64,7 +65,7 @@ const CategoryProductDetail = props => {
         </View>
         <View style={styles.flatListContainer}>
           <PostComponent
-            postData={category?.data?.data}
+            postData={category?.data}
             message={`No Item  was found  in this Category !!!!!`}
           />
         </View>
@@ -83,7 +84,8 @@ const styles = StyleSheet.create({
   },
   rowContainer: {
     alignSelf: 'center',
-    // paddingTop: HP(3),
+     marginTop: HP(-5),
+
   },
   recent: {
     flexDirection: 'row',
@@ -102,5 +104,8 @@ const styles = StyleSheet.create({
   },
   header:{
     marginTop:HP(3)
+  },
+  flatListContainer:{
+  marginLeft:WP(53)
   }
 });

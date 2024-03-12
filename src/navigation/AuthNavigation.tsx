@@ -18,28 +18,28 @@ const AuthNavigation = () => {
     <SafeAreaView style={{ flex: 1,  paddingTop:40, backgroundColor: 'white' }} >
     <Stack.Navigator>
       {/**/}
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Login"
         component={LoginScreen}
         options={{
           headerShown: false,
         }}
-      /> */}
+      />
 
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Register"
         component={Register}
         options={{
           headerShown: false,
         }}
-      /> */}
-       {/* <Stack.Screen
+      />
+       <Stack.Screen
         name="Register2"
         component={Register2}
         options={{
           headerShown: false,
         }}
-      /> */}
+      />
       <Stack.Screen
         name="Otp"
         component={OtpScreen}

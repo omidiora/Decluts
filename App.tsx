@@ -69,7 +69,6 @@ const App = () => {
   return (
     <Provider store={store}>
       <>
-        
         <AlertNotificationRoot>
           <>
             <MenuProvider>
@@ -83,9 +82,7 @@ const App = () => {
                           headerShown: false,
                         }}
                       /> */}
-                    
 
-                   
                     {/* {HideOnboardingScreen && (
                       <Stack.Screen
                         name="Onboarding"
@@ -96,7 +93,7 @@ const App = () => {
                       />
                     )} */}
 
-                    {users && (
+                    {!users && (
                       <Stack.Screen
                         name="Auth"
                         component={AuthNavigation}
@@ -106,9 +103,18 @@ const App = () => {
                       />
                     )}
   
+
                     <Stack.Screen
                       name="RoutingRoute"
                       component={RoutingRoute}
+                      options={{
+                        headerShown: false,
+                      }}
+                    />
+
+                    <Stack.Screen
+                      name="PreviewItem"
+                      component={PreviewItem}
                       options={{
                         headerShown: false,
                       }}

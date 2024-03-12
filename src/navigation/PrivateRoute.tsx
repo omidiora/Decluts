@@ -23,7 +23,6 @@ import {
   Toast,
 } from 'react-native-alert-notification';
 import AddItem1 from '../../src/Screen/Product/component/AddItem1';
-import PreviewItem from '../Screen/Product/PreviewItem';
 import LicenseScreen from '../../src/Screen/Licenses/LicenseScreen';
 import ProductNavigation from '../../src/navigation/ProductNavigation';
 import Setting from '../../src/Screen/Setting';
@@ -95,13 +94,7 @@ const RoutingRoute = () => {
         }}
       />
 
-      <Stack.Screen
-        name="PreviewItem"
-        component={PreviewItem}
-        options={{
-          headerShown: false,
-        }}
-      />
+   
       {/* 
    
 

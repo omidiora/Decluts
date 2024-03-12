@@ -38,6 +38,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Location from '../../assets/images/svg/location.svg';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const PreviewItem = ({route: {params}, showInterest}) => {
   const width = Dimensions.get('window').width;
@@ -79,7 +80,7 @@ const PreviewItem = ({route: {params}, showInterest}) => {
           top: HP(4),
           paddingHorizontal: 30,
         }}>
-        <TouchableOpacity onPress={()=>navigation.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <MaterialIcons name="arrow-back-ios" color={COLOR.white} size={25} />
         </TouchableOpacity>
         {/* <TouchableOpacity style={styles.dot}>
@@ -141,7 +142,9 @@ const PreviewItem = ({route: {params}, showInterest}) => {
         />
       </View>
       <View>
-        <ScrollView style={styles.subContainer}>
+        <ScrollView
+          style={styles.subContainer}
+          contentContainerStyle={{paddingBottom: HP(10)}}>
           <Text style={styles.posted}>Posted {params?.item?.listed}</Text>
           <Text style={styles.item_name}>{params?.item?.item_name}</Text>
           <View style={{flexDirection: 'row', marginVertical: HP(1)}}>
@@ -172,6 +175,31 @@ const PreviewItem = ({route: {params}, showInterest}) => {
                 : params?.item?.defect_reason}
             </Text>
           </View>
+
+          <View style={styles.safetyTip}>
+            <Text style={styles.tips}>Safety Tips</Text>
+            <Text style={styles.note}>
+            {"\n"}{"\n"}
+              Please note that we will never initiate the first contact with you
+              to ensure your safety from potential scammers. {"\n"}
+              {"\n"}
+              If this item aligns
+              with your requirements, kindly click on 'Show Interest' to
+              proceed.{"\n"}{"\n"} Please be aware that you are responsible for the delivery
+              costs. Before expressing your interest, kindly verify the item's
+              location.{"\n"}{"\n"} The order will be confirmed upon successful payment,
+              ensuring a seamless transaction process.{"\n"}{"\n"} Upon payment
+              confirmation, you will receive the seller's details to facilitate
+              item pickup.{"\n"}{"\n"} Kindly note that item pick-up should be arranged
+              within a 48-hour timeframe. Refunds due to change of heart,
+              distance and logistical considerations are subject to a 10%
+              service charge.{"\n"}{"\n"} Before proceeding with your payment, please ensure
+              that you can conveniently access the pick-up location within the
+              specified time. {"\n"}{"\n"}Please be informed that refunds will be processed
+              once all terms and conditions have been met.{"\n"}{"\n"} Thank you for your
+              understanding and cooperation.
+            </Text>
+          </View>
         </ScrollView>
         <View style={styles.priceContainer}>
           <View>
@@ -190,7 +218,20 @@ const PreviewItem = ({route: {params}, showInterest}) => {
                   <ActivityIndicator color={'black'} size={'large'} />
                 </View>
               ) : (
-                <Text style={styles.interest}>Show Interest</Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                  }}>
+                  <Text style={styles.interest}>Show Interest</Text>
+                  <View style={{marginTop: HP(1.7), marginLeft: WP(-10)}}>
+                    <Ionicons
+                      name="arrow-forward"
+                      color={COLOR.white}
+                      size={22}
+                    />
+                  </View>
+                </View>
               )}
             </TouchableOpacity>
           </View>
@@ -232,7 +273,10 @@ const styles = StyleSheet.create({
 
   subContainer: {
     // top: HP(-10),
-    paddingHorizontal: WP(4),
+    // paddingHorizontal: WP(4),
+    height: HP(39),
+    width:WP(90),
+    padding:30
   },
   item_name: {
     fontFamily: 'Roboto-Bold',
@@ -294,14 +338,15 @@ const styles = StyleSheet.create({
   },
   showInterest: {
     borderWidth: 1,
-    width: WP(40),
+    width: WP(50),
     borderRadius: WP(12),
     borderColor: '#F2F4F7',
-    height: HP(6),
+    height: HP(6.6),
+    backgroundColor: COLOR.mainColor,
   },
   interest: {
-    color: '#98A2B3',
-
+    color: COLOR.white,
+    fontFamily: FontFamily.bold,
     textAlign: 'center',
     padding: HP(1.3),
     fontSize: WP(5),
@@ -312,7 +357,24 @@ const styles = StyleSheet.create({
   indicator: {
     marginTop: 10,
   },
-  dot:{
-    marginLeft:WP(80)
+  dot: {
+    marginLeft: WP(80),
+  },
+  safetyTip: {
+    backgroundColor: '#FEF0C7',
+    // width: WP(90),
+    alignSelf: 'center',
+    borderRadius: 10,
+    padding:10,
+    marginTop:HP(3)
+  },
+  tips:{
+    fontFamily:FontFamily.bold,
+    color:COLOR.black,
+    fontSize:WP(5)
+  },
+  note:{
+    fontFamily:FontFamily.medium,
+    color:COLOR.black
   }
 });

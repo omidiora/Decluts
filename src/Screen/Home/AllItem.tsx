@@ -37,7 +37,8 @@ import Game from '../../assets/images/svg/Game.svg';
 import Sport from '../../assets/images/svg/Sport.svg';
 import {useAsyncStorage} from '@react-native-async-storage/async-storage';
 import {AlertNofityError, notify} from '../../Util/notify';
-import Location from '../../assets/images/svg/location.svg'
+import Location from '../../assets/images/svg/location.svg';
+import {PostLoader} from 'react-native-preloader-shimmer';
 
 Entypo.loadFont();
 Feather.loadFont();
@@ -63,13 +64,11 @@ const AllItem = () => {
     dispatch(fetchCategoryProductById(1));
   }, [dispatch]);
 
- 
   if (error?.isAxiosError && error?.response === undefined) {
     AlertNofityError('Error', 'Check Your Network Connection!');
   } else if (error) {
-    AlertNofityError('Error', error?.response?.data?.message );
+    AlertNofityError('Error', error?.response?.data?.message);
   }
-
 
   // console.log(error.response.data?.message)
   return (
@@ -118,7 +117,6 @@ const AllItem = () => {
         visible={isModalVisible}
         setModalVisible={setModalVisible}
       />
-
       <View style={styles.flatlist}>
         <FlatList
           contentContainerStyle={{paddingBottom: HP(50)}}
@@ -134,7 +132,7 @@ const AllItem = () => {
               onPress={() =>
                 navigation.navigate('PreviewItem', {
                   item: item,
-                  showInterest:true
+                  showInterest: true,
                 })
               }>
               <Image
@@ -153,9 +151,9 @@ const AllItem = () => {
                   {currencyFormatter(item.price)}
                 </Text>
                 <View style={{flexDirection: 'row'}}>
-                 <View style={{marginTop:1.7,paddingHorizontal:3}}>
-                 <Location/>
-                 </View>
+                  <View style={{marginTop: 1.7, paddingHorizontal: 3}}>
+                    <Location />
+                  </View>
                   <Text style={styles.area}>
                     {item.area} {item.state}
                   </Text>
@@ -167,7 +165,12 @@ const AllItem = () => {
             <>
               {loading ? (
                 <View style={styles.empty}>
-                  <Preloader loading={true} />
+                  <PostLoader
+                    barStyle={'dark-content'} //---> StatusBar Icon color
+                    animSpeed={100} //----> Animation Speed default 100
+                    visible={true} //----> Visibility
+                    backgroundColor={'white'}
+                  />
                 </View>
               ) : (
                 <Text style={styles.noItem}>
@@ -178,6 +181,8 @@ const AllItem = () => {
           )}
         />
       </View>
+
+      {/*  */}
     </View>
   );
 };
