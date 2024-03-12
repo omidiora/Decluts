@@ -1,4 +1,10 @@
-import {StyleSheet, Text, TouchableOpacity, View, ActivityIndicator} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+} from 'react-native';
 import React from 'react';
 import {COLOR, FontFamily, HP, WP} from '../Util/Util';
 
@@ -7,17 +13,25 @@ interface Props {
   COLOR?: string;
   onPress: () => void;
   loading: boolean;
-  disabled:boolean
+  disabled: boolean;
+  btnColor: string;
 }
 const FormButton: React.FC<Props> = ({
   btnTitle,
   COLOR = 'white',
   onPress,
-  loading=false,
-  disabled=false
+  loading = false,
+  disabled = false,
+  btnColor,
 }) => {
   return (
-    <TouchableOpacity style={styles.btnContainer} onPress={onPress} disabled={disabled}>
+    <TouchableOpacity
+      style={[
+        styles.btnContainer,
+        {backgroundColor: btnColor ? btnColor : '#02A89E'},
+      ]}
+      onPress={onPress}
+      disabled={disabled}>
       {loading ? (
         <>
           <ActivityIndicator size="large" color="white" />
@@ -37,12 +51,12 @@ const styles = StyleSheet.create({
     width: '90%',
     padding: HP(1.8),
     borderRadius: WP(1.2),
-    height:HP(7)
+    height: HP(7),
   },
   btnTitle: {
     textAlign: 'center',
     fontFamily: FontFamily.bold,
-    fontSize:WP(5),
+    fontSize: WP(5),
     // fontWeight:'600'
   },
 });

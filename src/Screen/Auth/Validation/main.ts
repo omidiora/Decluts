@@ -17,8 +17,6 @@ export const EmailandPhoneSchema = yup.object().shape({
     .required('Email Address is Required'),
   phone: yup
     .string()
-    .min(10, 'Phone must be at  10 characters`')
-    .max(11, 'Phone must be at  11 characters`')
     .required('Phone Number is required'),
 });
 

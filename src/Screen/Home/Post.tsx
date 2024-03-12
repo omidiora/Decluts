@@ -19,6 +19,7 @@ const Post = (props) => {
         </Text> */}
       </View>
       <FloatingAction
+       animated={false}
         showBackground={false}
         color={COLOR.mainColor}
         distanceToEdge={{

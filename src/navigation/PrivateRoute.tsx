@@ -23,7 +23,7 @@ import {
   Toast,
 } from 'react-native-alert-notification';
 import AddItem1 from '../../src/Screen/Product/component/AddItem1';
-import PreviewItem from '../../src/Screen/Product/PreviewItem ';
+import PreviewItem from '../Screen/Product/PreviewItem';
 import LicenseScreen from '../../src/Screen/Licenses/LicenseScreen';
 import ProductNavigation from '../../src/navigation/ProductNavigation';
 import Setting from '../../src/Screen/Setting';
@@ -45,6 +45,8 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 const RoutingRoute = () => {
   return (
+    <SafeAreaProvider style={{ flex: 1, }}>
+      <SafeAreaView style={{ flex: 1,  paddingTop:40, backgroundColor: 'white' }} >
     <Stack.Navigator>
       <Stack.Screen
         name="BottomTabNavigation"
@@ -154,6 +156,8 @@ const RoutingRoute = () => {
 
       {/* OrderNavigation */}
     </Stack.Navigator>
+    </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 

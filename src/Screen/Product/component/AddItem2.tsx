@@ -63,7 +63,6 @@ const AddItem2 = () => {
       updateItemSuccess2({
         category: values.category,
         brand: values.brand,
-        defect: values.defectReason ? values.defectReason : 'None',
       }),
     );
     navigation.navigate('Item3');
@@ -103,7 +102,7 @@ const AddItem2 = () => {
             errors,
             setFieldValue,
           }) => (
-            // console.log(errors),
+            console.log(errors),
             <View style={styles.subContainer}>
               <View style={{width: WP(98.8)}}>
                 <DropDownSelect
@@ -124,56 +123,7 @@ const AddItem2 = () => {
                 />
               </View>
 
-              <View
-                style={{
-                  marginVertical: 30,
-                }}>
-                <Text style={styles.text}>
-                  Does the item have any defect(s)
-                </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    width: '40%',
-                    marginVertical: 10,
-                  }}>
-                  {DefectIMap.map(item => (
-                    <TouchableWithoutFeedback
-                      style={{flexDirection: 'row'}}
-                      onPress={() => setFieldValue('selectedId', item.title)}>
-                      {/*   onChange={e => setFieldValue('category', e.value)} */}
-                      <MaterialCommunityIcons
-                        name={
-                          values.selectedId == item.title
-                            ? 'checkbox-blank-circle'
-                            : 'checkbox-blank-circle-outline'
-                        }
-                        size={30}
-                        color={  values.selectedId == item.title?COLOR.mainColor : COLOR.black}
-                      />
-                      <View>
-                        <Text style={styles.title}>{item.title}</Text>
-                      </View>
-                    </TouchableWithoutFeedback>
-                  ))}
-                </View>
-                <Text style={{marginTop: 10, color: 'red'}}>
-                  {errors.selectedId}
-                </Text>
-                {values.selectedId == 'Yes' && (
-                  <>
-                    <FormInput
-                      placeholder="Defect(issue)"
-                      label="Defect(issue)"
-                      multiline={true}
-                      onChangeText={text => setFieldValue('defectReason', text)}
-                      error={errors.defectReason}
-                    />
-                  </>
-                )}
-              </View>
-
+           
               <View style={styles.btn}>
                 <FormButton btnTitle="Next" onPress={() => handleSubmit()} />
               </View>
@@ -259,7 +209,7 @@ const styles = StyleSheet.create({
     color: COLOR.black,
   },
   btn: {
-    marginTop: HP(20),
+    marginTop: HP(40),
     width: WP(100),
   },
   itemCon:{

@@ -1,4 +1,12 @@
-import {StyleSheet, Text, View, Platform, Animated} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+  Animated,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useState} from 'react';
 import ViewContainer from '../../../component/ViewContainer';
 import HeaderComponent from '../../../component/HeaderComponent';
@@ -13,6 +21,8 @@ import {ItemSchema1} from '../Validation';
 import {useDispatch, useSelector} from 'react-redux';
 import {updateItemSuccess} from '../../../redux/product/api';
 import {useNavigation} from '@react-navigation/native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import {
   LocalGoverment,
   StateAndCapital,
@@ -22,6 +32,16 @@ import DropDownSelect from '../../../component/DropDownSelect';
 const data = [
   {label: 'Neatly Used (Old)', value: 'Neatly Used'},
   {label: 'New', value: 'New'},
+];
+const DefectIMap = [
+  {
+    id: 1,
+    title: 'Yes',
+  },
+  {
+    id: 2,
+    title: 'No',
+  },
 ];
 
 const AddItem1 = () => {
@@ -40,11 +60,11 @@ const AddItem1 = () => {
         address: values.address,
         condition: values.condition,
         price: values.price,
+        defect: values.defectReason ? values.defectReason : 'None',
       }),
     );
     navigation.navigate('Item2');
   };
-
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -74,6 +94,7 @@ const AddItem1 = () => {
               state: '',
               address: '',
               condition: '',
+              defectReason: '',
             }}
             onSubmit={values => SetItemProduct(values)}>
             {({
@@ -83,56 +104,126 @@ const AddItem1 = () => {
               values,
               errors,
               setFieldValue,
+              isValid,
             }) => (
-              <View style={styles.formInput}>
-                <FormInput
-                  label="Enter item name *"
-                  placeholder="Enter item name *"
-                  onChangeText={handleChange('name')}
-                  error={errors.name}
-                />
+              console.log(isValid, 'isValidisValid'),
+              (
+                <View style={styles.formInput}>
+                  <FormInput
+                    label="Enter item name *"
+                    placeholder="Enter item name *"
+                    onChangeText={handleChange('name')}
+                    error={errors.name}
+                  />
 
-                <FormInput
-                  label="Description *"
-                  placeholder="Description *"
-                  onChangeText={handleChange('description')}
-                  multiline={true}
-                  error={errors.description}
-                />
+                  <FormInput
+                    label="Description *"
+                    placeholder="Description *"
+                    onChangeText={handleChange('description')}
+                    multiline={true}
+                    error={errors.description}
+                  />
 
-                <DropDownSelect
-                  placeholder={'Select State'}
-                  onChange={e => setFieldValue('state', e.value)}
-                  title={'State'}
-                  data={StateInNigeria}
-                  error={errors.state}
-                />
+                  <DropDownSelect
+                    placeholder={'Select State'}
+                    onChange={e => setFieldValue('state', e.value)}
+                    title={'State'}
+                    data={StateInNigeria}
+                    error={errors.state}
+                  />
 
-                <DropDownSelect
-                  placeholder={'Select Local Goverment'}
-                  onChange={e => setFieldValue('area', e.value)}
-                  title={'Area(Local Goverment)'}
-                  data={LocalGoverment}
-                  error={errors.area}
-                />
-                <DropDownSelect
-                  placeholder={'Select Condition'}
-                  onChange={e => setFieldValue('condition', e.value)}
-                  title={'Item Condition'}
-                  data={data}
-                  error={errors.condition}
-                />
+                  <DropDownSelect
+                    placeholder={'Select Local Goverment'}
+                    onChange={e => setFieldValue('area', e.value)}
+                    title={'Area(Local Goverment)'}
+                    data={LocalGoverment}
+                    error={errors.area}
+                  />
+                  <DropDownSelect
+                    placeholder={'Select Condition'}
+                    onChange={e => setFieldValue('condition', e.value)}
+                    title={'Item Condition'}
+                    data={data}
+                    error={errors.condition}
+                  />
 
-                <FormInput
-                  label="Address *"
-                  onChangeText={handleChange('address')}
-                  error={errors.address}
-                />
+                  <FormInput
+                    label="Address *"
+                    onChangeText={handleChange('address')}
+                    error={errors.address}
+                  />
 
-                <View style={styles.btn}>
-                  <FormButton btnTitle="Next" onPress={() => handleSubmit()} />
+                  <View
+                    style={{
+                      marginVertical: 30,
+                    }}>
+                    <Text style={styles.text}>
+                      Does the item have any defect(s)
+                    </Text>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        width: '40%',
+                        marginVertical: 10,
+                      }}>
+                      {DefectIMap.map(item => (
+                        <TouchableOpacity
+                          style={{flexDirection: 'row'}}
+                          onPress={() =>
+                            setFieldValue('selectedId', item.title)
+                          }>
+                          <React.Fragment>
+                            <MaterialCommunityIcons
+                              name={
+                                values.selectedId == item.title
+                                  ? 'checkbox-blank-circle'
+                                  : 'checkbox-blank-circle-outline'
+                              }
+                              size={30}
+                              color={
+                                values.selectedId == item.title
+                                  ? COLOR.mainColor
+                                  : COLOR.black
+                              }
+                            />
+                            <View>
+                              <Text style={styles.title}>{item.title}</Text>
+                            </View>
+                          </React.Fragment>
+                          {/*   onChange={e => setFieldValue('category', e.value)} */}
+
+                          {/**/}
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                    <Text style={{marginTop: 10, color: 'red'}}>
+                      {errors.selectedId}
+                    </Text>
+                    {values.selectedId == 'Yes' && (
+                      <>
+                        <FormInput
+                          placeholder="Defect(issue)"
+                          label="Defect(issue)"
+                          multiline={true}
+                          onChangeText={text =>
+                            setFieldValue('defectReason', text)
+                          }
+                          error={errors.defectReason}
+                        />
+                      </>
+                    )}
+                  </View>
+
+                  <View style={styles.btn}>
+                    <FormButton
+                      btnTitle="Next"
+                      onPress={() => handleSubmit()}
+                      btnColor={isValid ? COLOR.mainColor : COLOR.lightGrey}
+                    />
+                  </View>
                 </View>
-              </View>
+              )
             )}
           </Formik>
         </View>
@@ -195,6 +286,12 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
+  text:{
+    fontSize: 15,
+    //  fontWeight:'bold',
+    color: 'black',
+    fontFamily: FontFamily.bold,
+  },
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
@@ -213,7 +310,7 @@ const styles = StyleSheet.create({
     // marginTop: HP(3),
     width: '90%',
     marginLeft: 20,
-    height:HP(8)
+    height: HP(8),
   },
   basicInfo: {
     fontSize: WP(6.6),

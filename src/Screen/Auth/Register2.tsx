@@ -2,19 +2,19 @@ import {StyleSheet, Text, View, Image, Platform} from 'react-native';
 import React, {useState, useRef} from 'react';
 import {BODY_IMAGE, COLOR, HP, WP} from '../../Util/Util';
 import FormInput from '../../component/FormInput';
-import PhoneInput from 'react-native-phone-number-input';
+import PhoneInput from 'react-native-international-phone-number';
 import FormButton from '../../component/FormButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Formik} from 'formik';
 import {EmailandPhoneSchema} from './Validation/main';
 import HeaderComponent from '../../component/HeaderComponent';
-import { useLoginMutation } from '../../redux/auth/api';
-import { useNavigation } from '@react-navigation/native';
+import {useLoginMutation} from '../../redux/auth/api';
+import {useNavigation} from '@react-navigation/native';
 import ViewContainer from '../../component/ViewContainer';
 
-interface AuthFunctionParam{
-  email:string,
-  password:string
+interface AuthFunctionParam {
+  email: string;
+  password: string;
 }
 const Register2 = () => {
   const [value, setValue] = useState('');
@@ -23,50 +23,80 @@ const Register2 = () => {
   const [showMessage, setShowMessage] = useState(false);
   const phoneInput = useRef<PhoneInput>(null);
   const navigation = useNavigation();
+
+  const AuthNavigation = (values: AuthFunctionParam) => {
+    navigation.navigate('CreatePassword', {
+      email: values.email,
+      phone: values.phone
+        .replace(/ /g, '')
+        .replace('+234', '')
+        .replace(/^0+/, '')
+        .replace(/\D/g, ''),
+    });
+  };
+
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [inputValue, setInputValue] = useState('');
+
   
 
-    const AuthNavigation=(values:AuthFunctionParam)=>{
-      navigation.navigate("CreatePassword",{
-        email:values.email,
-        phone:values.phone.replace(/ /g, "").replace('+234', '').replace(/^0+/, '').replace(/\D/g, '')
-      })
-
-    }
+  function handleSelectedCountry(country) {
+    setSelectedCountry(country);
+  }
 
 
-    
 
-
-  
   return (
     // EmailandPhoneSchema
     <KeyboardAwareScrollView style={styles.container}>
-     <ViewContainer>
-     <HeaderComponent rightComponent={true} rightText={"Sign In"} />
+      <ViewContainer>
+        <HeaderComponent rightComponent={true} rightText={'Sign In'} />
 
-      <View style={styles.subContainer}>
-        <Image source={BODY_IMAGE.logo} style={styles.logo} />
-        <Text style={styles.spam}>We will never spam you.</Text>
-      </View>
-      <Formik
-        validationSchema={EmailandPhoneSchema}
-        initialValues={{email: '', phone: ''}}
-        onSubmit={values => AuthNavigation(values)}>
-        {({handleChange, handleBlur, handleSubmit, values, errors}) => (
-          (
+        <View style={styles.subContainer}>
+          <Image source={BODY_IMAGE.logo} style={styles.logo} />
+          <Text style={styles.spam}>We will never spam you.</Text>
+        </View>
+        <Formik
+          validationSchema={EmailandPhoneSchema}
+          initialValues={{email: '', phone: ''}}
+          onSubmit={values => AuthNavigation(values)}>
+          {({handleChange, handleBlur, handleSubmit, values, errors ,setFieldValue}) => (
+              
             <>
               <View style={styles.form}>
                 <FormInput
-                  label="Email *"
-                  placeholder='Email'
+                
+                  label="Email"
+                  placeholder="Email"
                   value={values.email}
                   onChangeText={handleChange('email')}
                   error={errors.email}
+                  required
                 />
                 {/* <FormInput label="Phone Number" placeholder="Phone Number *" /> */}
 
-                <Text style={styles.phone}>Phone Number*</Text>
+                <View style={{width:WP(80), }}>
+              <View style={{flexDirection:'row'}}>
+              <Text style={styles.phone}>Phone Number</Text>
+              <Text style={styles.required}>*</Text>
+              </View>
                 <PhoneInput
+                 placeholder="0000000000000"
+                 defaultCountry="NG"
+                  value={values.phone}
+                  onChangePhoneNumber={(e)=>setFieldValue('phone',e)}
+                  selectedCountry={selectedCountry}
+                  onChangeSelectedCountry={handleSelectedCountry}
+                  phoneInputStyles={{
+                    container:{
+                      height: HP(7),
+                      // borderWidth:0.1,
+                      borderColor:'#E4E7EC',
+                    }
+                  }}
+                />
+                </View>
+                {/* <PhoneInput
                   value={value?.replace(/ /g, "").replace('+234', '')}
                   defaultCode="NG"
                   textContainerStyle={{
@@ -89,21 +119,18 @@ const Register2 = () => {
                   withDarkTheme
                  
                   
-                />
+                /> */}
                 <Text style={styles.errorPhone}>{errors.phone}</Text>
                 <View style={styles.btn}>
-                <FormButton btnTitle="Continue" onPress={handleSubmit} />
-                {/* <FormButton btnTitle="Continue" onPress={handleSubmit} /> */}
+                  <FormButton btnTitle="Continue" onPress={handleSubmit} />
+                  {/* <FormButton btnTitle="Continue" onPress={handleSubmit} /> */}
                   {/* LoginFunc */}
-
                 </View>
-
               </View>
             </>
-          )
-        )}
-      </Formik>
-     </ViewContainer>
+          )}
+        </Formik>
+      </ViewContainer>
     </KeyboardAwareScrollView>
   );
 };
@@ -141,13 +168,19 @@ const styles = StyleSheet.create({
   },
   btn: {
     paddingTop: HP(7),
+    marginTop:HP(15),
   },
   phone: {
     marginVertical: HP(1),
     color: COLOR.black,
   },
-  errorPhone:{
-    color:'red',
-    marginVertical:3
+  errorPhone: {
+    color: 'red',
+    marginVertical: 3,
+  },
+  required:{
+    marginTop:HP(1.2),
+    marginLeft:WP(1.2),
+    color:COLOR.mainColor
   }
 });

@@ -10,7 +10,14 @@ import {
 import React, {useState} from 'react';
 import ViewContainer from '../../../component/ViewContainer';
 import HeaderComponent from '../../../component/HeaderComponent';
-import {BODY_IMAGE, COLOR, HP, SERVER_URL, WP} from '../../../Util/Util';
+import {
+  BODY_IMAGE,
+  COLOR,
+  FontFamily,
+  HP,
+  SERVER_URL,
+  WP,
+} from '../../../Util/Util';
 import FormInput from '../../../component/FormInput';
 import {Formik} from 'formik';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -108,6 +115,15 @@ const AddItem3 = () => {
       .catch(err => console.log({err}));
   };
 
+  const getTotalFileSize = files => {
+    let totalSize = 0;
+    for (const file of files) {
+      totalSize += file.fileSize;
+    }
+
+    return totalSize / 1024;
+  };
+
   const UploadFileFunction = async () => {
     if (imageTypes.length !== 3 || !Object.keys(videoTypes).length) {
       Alert.alert(
@@ -167,6 +183,7 @@ const AddItem3 = () => {
     UploadFileFunction();
   };
 
+  console.log(imageTypes, 'imageTypes');
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -186,7 +203,8 @@ const AddItem3 = () => {
       {/* <MessageModalComponent visible={true}/> */}
       <KeyboardAwareScrollView
         showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{paddingBottom:WP(30)}}>
         <View style={styles.subContainer}>
           <Text style={styles.addItem}>Media</Text>
           <Note
@@ -200,28 +218,46 @@ const AddItem3 = () => {
           {/* <Image source={BODY_IMAGE.note} style={styles.img} /> */}
 
           {imageTypes?.length > 0 ? (
-            <TouchableWithoutFeedback
-              onPress={() => ImagePicker()}
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                gap: 1,
-              }}>
-              {imageTypes.map((item, index) => (
-                <Image
-                  key={index}
-                  source={{
-                    uri: item.uri,
-                  }}
-                  style={styles.image}
-                />
-              ))}
-            </TouchableWithoutFeedback>
+            <View style={styles.modalBackground}>
+              <Text numberOfLines={1} style={styles.item_name}>{item?.item_name}</Text>
+              <Text
+                style={[
+                  styles.item_name,
+                  {
+                    bottom: 3,
+                    fontFamily: FontFamily.regular,
+                    color: COLOR.lightGrey,
+                  },
+                ]}>
+                {getTotalFileSize(imageTypes).toFixed(2)}Mb
+              </Text>
+              <TouchableWithoutFeedback
+                onPress={() => ImagePicker()}
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                  gap: 10,
+                  // borderWidth: 1,
+                  width: WP(90),
+                  // marginLeft: WP(4.5),
+                }}>
+                {imageTypes.map((item, index) => (
+                  <Image
+                    key={index}
+                    source={{
+                      uri: item.uri,
+                    }}
+                    style={styles.image}
+                  />
+                ))}
+              </TouchableWithoutFeedback>
+            </View>
           ) : (
             <>
               <View style={styles.bodyImage}>
                 <TouchableOpacity onPress={() => ImagePicker()}>
                   <Image source={BODY_IMAGE.fileUpload1} style={styles.file} />
+                  {/* <Text numberOfLines={1} style={styles.item_name}>{item?.item_name}</Text> */}
                 </TouchableOpacity>
               </View>
             </>
@@ -229,12 +265,26 @@ const AddItem3 = () => {
 
           {/* Video */}
           {Object.keys(videoTypes).length ? (
-            <TouchableWithoutFeedback onPress={() => VideoPicker()}>
+            //  
+          <View style={styles.modalBackground}>
+              <TouchableWithoutFeedback onPress={() => VideoPicker()}>
               <Image
                 source={{uri: videoThumbNail?.path}}
                 style={styles.videoType}
               />
+                <Text
+                style={[
+                  styles.item_name,
+                  {
+                    bottom: 25,
+                    fontFamily: FontFamily.regular,
+                    color: COLOR.lightGrey,
+                  },
+                ]}>
+                 {getTotalFileSize(videoTypes).toFixed(2)}Mb
+              </Text>
             </TouchableWithoutFeedback>
+          </View>
           ) : (
             <>
               <TouchableWithoutFeedback
@@ -242,7 +292,9 @@ const AddItem3 = () => {
                 onPress={() => VideoPicker()}>
                 <View>
                   <Image source={BODY_IMAGE.fileUpload2} style={styles.file} />
+                
                 </View>
+
               </TouchableWithoutFeedback>
             </>
           )}
@@ -343,15 +395,16 @@ const styles = StyleSheet.create({
   },
   image: {
     width: WP(24),
-    height: HP(20),
-    maxWidth: WP(30),
+    height: HP(14),
+    // maxWidth: WP(30),
     color: 'black',
-    resizeMode: 'contain',
+    resizeMode: 'stretch',
+    borderRadius: 4,
     // paddingLeft:130
   },
   videoType: {
-    width: WP(94),
-    height: HP(15),
+    width: WP(80),
+    height: HP(20),
     resizeMode: 'cover',
     borderRadius: 10,
 
@@ -368,5 +421,31 @@ const styles = StyleSheet.create({
     height: HP(12),
     // position:'absolute',
     // marginTop:HP(4)
+  },
+  item_name: {
+    fontFamily: FontFamily.bold,
+    color: COLOR.black,
+    position: 'absolute',
+    zIndex: 100,
+    bottom: HP(2.5),
+    left: WP(4),
+    
+  },
+  modalBackground: {
+    backgroundColor: 'white', // semi-transparent background color
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 2, // elevation for shadow effect
+    borderRadius: 10,
+    width: WP(90),
+    height: HP(26),
+    alignSelf: 'center',
+    marginVertical: 10,
+    padding: 35,
+  },
+  modalContainer: {
+    backgroundColor: 'green', // color of the modal
+    borderRadius: 10,
+    width: '80%', // adjust width as needed,
   },
 });

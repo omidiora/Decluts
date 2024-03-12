@@ -23,7 +23,7 @@ import {
   Toast,
 } from 'react-native-alert-notification';
 import AddItem1 from './src/Screen/Product/component/AddItem1';
-import PreviewItem from './src/Screen/Product/PreviewItem ';
+import PreviewItem from './src/Screen/Product/PreviewItem';
 import LicenseScreen from './src/Screen/Licenses/LicenseScreen';
 import ProductNavigation from './src/navigation/ProductNavigation';
 import Setting from './src/Screen/Setting';
@@ -69,14 +69,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <>
-        <View style={styles.StatusBar}>
-          <StatusBar
-            hidden={false}
-            animated
-            backgroundColor={'white'}
-            barStyle={'dark-content'}
-          />
-        </View>
+        
         <AlertNotificationRoot>
           <>
             <MenuProvider>
@@ -84,13 +77,16 @@ const App = () => {
                 <>
                   <Stack.Navigator>
                     {/* <Stack.Screen
-                        name="Onboardinga"
-                        component={OrderScreen}
+                        name="Onboarding"
+                        component={OnboardingScreen}
                         options={{
                           headerShown: false,
                         }}
-                      />
-                    {!HideOnboardingScreen && (
+                      /> */}
+                    
+
+                   
+                    {/* {HideOnboardingScreen && (
                       <Stack.Screen
                         name="Onboarding"
                         component={OnboardingScreen}
@@ -98,11 +94,9 @@ const App = () => {
                           headerShown: false,
                         }}
                       />
-                    )}
+                    )} */}
 
-                    */}
-
-                    {!users && (
+                    {users && (
                       <Stack.Screen
                         name="Auth"
                         component={AuthNavigation}
@@ -111,7 +105,7 @@ const App = () => {
                         }}
                       />
                     )}
-
+  
                     <Stack.Screen
                       name="RoutingRoute"
                       component={RoutingRoute}

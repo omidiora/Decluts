@@ -11,8 +11,8 @@ import {COLOR, FontFamily, HP, WP} from '../Util/Util';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 
-TouchableOpacity;
-TouchableOpacity;
+import {PostLoader} from 'react-native-preloader-shimmer';
+
 interface FormInputProps {
   label: string;
   placeholder: string;
@@ -24,6 +24,9 @@ interface FormInputProps {
   error: string;
   value: string | undefined;
   multiline: boolean;
+  required?:boolean,
+  bold?:boolean,
+  labelColor:boolean,
 }
 const FormInput = ({
   label,
@@ -36,13 +39,20 @@ const FormInput = ({
   error,
   value,
   multiline = false,
+  required,
+  bold,
+  labelColor,
+  borderColor
 }: FormInputProps) => {
   const [password, setPassword] = React.useState<boolean>(false);
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.topLabelContainer}>
-        <Text style={styles.label}>{label}</Text>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={[styles.label,{fontFamily: bold ? FontFamily.bold:FontFamily.regular,color: labelColor? COLOR.mainColor:COLOR.black}]}>{label}</Text>
+          {required && <Text style={styles.asterisk}>{'*'}</Text>}
+        </View>
         {forgotPassword && (
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgotPassword')}>
@@ -58,6 +68,7 @@ const FormInput = ({
           placeholder={placeholder}
           style={[
             styles.textInput,
+            {borderColor:borderColor?COLOR.mainColor:"#E4E7EC"},
             multiline && {
               height: HP(15),
               paddingTop: HP(2),
@@ -81,11 +92,10 @@ const FormInput = ({
         )}
       </View>
       {error && (
-        <View style={{top:multiline?1:3}}>
+        <View style={{top: multiline ? 1 : 3}}>
           <Text style={styles.error}>{error}</Text>
         </View>
       )}
-     
     </View>
   );
 };
@@ -99,16 +109,19 @@ const styles = StyleSheet.create({
   label: {
     paddingBottom: WP(2),
     color: COLOR.black,
-    fontFamily: FontFamily.bold,
-    fontWeight: '400',
+    
+    // fontWeight: '400',
+    marginLeft:4,
+    fontFamily:FontFamily.medium
   },
   textInput: {
-    borderWidth: 0,
+    borderWidth: 1,
     width: Platform.OS == 'ios' ? '90%' : '90%',
     padding: HP(2),
-    borderRadius: WP(1),
+    borderRadius: WP(2),
     backgroundColor: '#E4E7EC',
     height: HP(7),
+    fontWeight:'bold'
   },
   eye: {
     paddingTop: HP(2),
@@ -128,5 +141,9 @@ const styles = StyleSheet.create({
     color: 'red',
     // paddingTop: Platform.OS == 'ios' ? 15 : -160,
     // marginTop:-15
+  },
+  asterisk: {
+    marginLeft: 3,
+    color: COLOR.mainColor,
   },
 });

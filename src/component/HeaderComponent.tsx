@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   Pressable,
+  StatusBar,
 } from 'react-native';
 import React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -79,6 +80,8 @@ const HeaderComponent = ({
 
   return (
     <View style={{paddingBottom:50}}>
+        <StatusBar translucent backgroundColor="transparent" />
+
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -118,10 +121,11 @@ const styles = StyleSheet.create({
     paddingTop: HP(-1),
   },
   signInText: {
-    color: COLOR.black,
+    color: COLOR.mainColor,
     // fontWeight: 'bold',
     fontSize: WP(4.5),
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily:FontFamily.bold
   },
 
   create: {

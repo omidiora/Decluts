@@ -59,29 +59,30 @@ const UploadAllItem = () => {
 
     dispatch(upCreateProductApi(formData, navigation));
   };
-
+  
   console.log(item, 'adlmafl');
   return (
     <View style={{flex:1,backgroundColor:'white'}}>
-    <ViewContainer>
+    
     <HeaderComponent rightComponent={' '} title={'Preview'} />
 
-<ScrollView>
+<ScrollView 
+contentContainerStyle={{paddingBottom:90}}>
   <View style={styles.container}>
     <View style={styles.header}>
       <UploadNote
-        width={WP(104)}
-        height={HP(11)}
+        width={WP(110)}
+        height={HP(24)}
         style={{
           alignSelf: 'center',
 
           paddingBottom: 50,
-          marginLeft: -50,
+          // marginLeft: -50,
         }}
       />
     </View>
     <ScrollView>
-      <View style={{paddingTop: 30}}>
+      <View  >
         <Carousel
           layout={'stack'}
           data={item?.previewImage?.payload?.imageTypes}
@@ -199,7 +200,7 @@ const UploadAllItem = () => {
     </View>
   </View>
 </ScrollView>
-    </ViewContainer>
+   
     </View>
   );
 };
@@ -275,8 +276,8 @@ const styles = StyleSheet.create({
   price: {
     fontWeight: 'bold',
     color: COLOR.black,
-    fontSize: WP(3),
+    fontSize: WP(5),
     marginLeft: 3,
   },
-  header: {marginTop: 30, marginLeft: 13},
+  header: {marginTop: -50, marginLeft: 13},
 });

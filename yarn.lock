@@ -1744,6 +1744,11 @@
     prompts "^2.4.0"
     semver "^7.5.2"
 
+"@react-native-picker/picker@^2.6.1":
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.6.1.tgz#3b20ddd1385fab0487db103dc6519570f8892e6d"
+  integrity sha512-oJftvmLOj6Y6/bF4kPcK6L83yNBALGmqNYugf94BzP0FQGpHBwimVN2ygqkQ2Sn2ZU3pGUZMs0jV6+Gku2GyYg==
+
 "@react-native/assets-registry@^0.72.0":
   version "0.72.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.72.0.tgz#c82a76a1d86ec0c3907be76f7faf97a32bbed05d"
@@ -4216,6 +4221,11 @@ google-libphonenumber@^3.2.10:
   resolved "https://registry.yarnpkg.com/google-libphonenumber/-/google-libphonenumber-3.2.33.tgz#948b877914eb7f35fc6d311220472bf9bd6b27d4"
   integrity sha512-1QKCvAlfq8zY1mviORI9lDzM3I/hwm9+h0CwYBTLq59DBbSHMd5zBOLqHZFiBLicRpwIz46Nynvbywj1XApKvA==
 
+google-libphonenumber@^3.2.32:
+  version "3.2.34"
+  resolved "https://registry.yarnpkg.com/google-libphonenumber/-/google-libphonenumber-3.2.34.tgz#ef29b53be0f9fb517aaa53d26a541150f86ec921"
+  integrity sha512-CLwkp0lZvMywh6dCh0T3Fm8XsfJhLAupc8AECwYkJNQBPW8wQPrv/tV0oFKCs8FMw+pTQyNPZoycgBzYjqtTZQ==
+
 gopd@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/gopd/-/gopd-1.0.1.tgz#29ff76de69dac7489b7c0918a5788e56477c332c"
@@ -5337,6 +5347,11 @@ levn@^0.4.1:
   dependencies:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
+
+libphonenumber-js@^1.10.24:
+  version "1.10.58"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.10.58.tgz#2015877bd47fd3d32d9fbfcedd75df35be230c9a"
+  integrity sha512-53A0IpJFL9LdHbpeatwizf8KSwPICrqn9H0g3Y7WQ+Jgeu9cQ4Ew3WrRtrLBu/CX2lXd5+rgT01/tGlkbkzOjw==
 
 lines-and-columns@^1.1.6:
   version "1.2.4"
@@ -6535,6 +6550,11 @@ react-native-circular-progress@^1.3.9:
   dependencies:
     prop-types "^15.8.1"
 
+react-native-country-codes-picker@2.3.4:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/react-native-country-codes-picker/-/react-native-country-codes-picker-2.3.4.tgz#ac6196199cb76a30997a98ed095243c9af34994f"
+  integrity sha512-2TZwEm7jwes65ROs2CLvJMINpswCTKAMUX5qeDK5fQmRH+Zv1ShqcysplBzcZurdT8v9WUg/TeI2C6abE6gQQA==
+
 react-native-country-picker-modal@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-country-picker-modal/-/react-native-country-picker-modal-2.0.0.tgz#005421303349a81fedf5975e465405bb4b7312d5"
@@ -6604,6 +6624,13 @@ react-native-image-slider-box@^2.0.7:
   integrity sha512-opZ0a5HYkK9Ofb5ihcdFJ+CqH2GSsEdyV75TOnZqs3PVsP8p8LWaWyf/Qj8qNdt2Jdv2qpiogqwH6gDwf75ZMg==
   dependencies:
     react-native-snap-carousel latest
+
+react-native-international-phone-number@^0.7.6:
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/react-native-international-phone-number/-/react-native-international-phone-number-0.7.6.tgz#883d6afc3da345e11e9abd0f08e068cde8d587b8"
+  integrity sha512-j4d/+yoIG7QUpUl7J+C6dpK5n97myAKGEa6SAOORN/BXMjYNkBISu+akEMtWeflSVfYFQixHP5+uwX12hLlYdw==
+  dependencies:
+    react-native-country-codes-picker "2.3.4"
 
 react-native-iphone-screen-helper@^2.0.2:
   version "2.1.1"
@@ -6676,6 +6703,15 @@ react-native-paystack-webview@^4.0.3:
   dependencies:
     react-native-webview "*"
     validator "^13.6.0"
+
+react-native-phone-input@^1.3.7:
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/react-native-phone-input/-/react-native-phone-input-1.3.7.tgz#d22c15ff41e11daea482b23e6efc44b3af06a984"
+  integrity sha512-0mw8Y46SldiZtuVhWN0BUby3CU6qVqkQnWQv5WYziIak0u7o+UHQCKpKwhxLdH60H/w/Ktix8QD9DFgvHSLkvw==
+  dependencies:
+    google-libphonenumber "^3.2.32"
+    lodash "^4.17.21"
+    prop-types "^15.8.1"
 
 react-native-phone-number-input@^2.1.0:
   version "2.1.0"
@@ -7177,6 +7213,13 @@ rimraf@~2.6.2:
   integrity sha512-mwqeW5XsA2qAejG46gYdENaxXjx9onRNCfn7L0duuP4hCuTIi/QO7PDK07KJfp1d+izWPrzEJDcSqBa0OZQriA==
   dependencies:
     glob "^7.1.3"
+
+rn-phone-number-input@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/rn-phone-number-input/-/rn-phone-number-input-0.3.2.tgz#34a99902a1ee84d6a590a4c7eec1858b5529f6b4"
+  integrity sha512-IUlqFgLqwoeTc+WHJIRqKERXa+HHW26NZIv+97YeR+S5jlxZ7UbJwYXsCaTF4LniP0IBFDXupXQFxKAsx7ONXQ==
+  dependencies:
+    libphonenumber-js "^1.10.24"
 
 run-parallel@^1.1.9:
   version "1.2.0"

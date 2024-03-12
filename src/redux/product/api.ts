@@ -95,6 +95,7 @@ const productApi = createSlice({
           states,
           address,
           condition,
+          defect,
           brand,
           price,
           image1,
@@ -112,6 +113,7 @@ const productApi = createSlice({
       state.item.condition = condition;
       state.item.brand = brand;
       state.item.price = price;
+      state.item.defect = defect;
     },
     updateItemFailure(state, action) {
       state.data = null;

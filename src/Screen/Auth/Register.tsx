@@ -16,6 +16,7 @@ Icon.loadFont();
 const Register = () => {
   const [name, setName] = React.useState('');
   const navigation = useNavigation();
+  const [changeLayout, setChangeLayout] = React.useState(false);
 
   const nameValidation = () => {
     if (name == '' || name < 2) {
@@ -46,16 +47,22 @@ const Register = () => {
         rightText={'Sign In'}
         rightFunc={() => navigation.navigate('Login')}
       />
-      <Image source={BODY_IMAGE.logo} style={styles.logo} />
-      <Text style={styles.letGo}>
+     <View style={changeLayout &&{flexDirection:'row',width:WP(70)}}>
+     <Image source={BODY_IMAGE.logo} style={[styles.logo,]} />
+      <Text style={[styles.letGo,changeLayout&&{marginTop:HP(0.4),marginLeft:10, textAlign:'left'}]}>
         Lets get to know you and get your account created.
       </Text>
+     </View>
       <View style={styles.input}>
         <FormInput
           label="What is your name?"
           placeholder="Name"
           onChangeText={handleChange('name')}
           error={errors.name}
+          labelColor={changeLayout}
+          borderColor={changeLayout}
+          onFocus={()=>setChangeLayout(true)}
+          onBlur={()=>setChangeLayout(false)}
         />
         <View style={styles.btn}>
           <FormButton btnTitle="Continue" onPress={() => handleSubmit()} />
@@ -89,9 +96,10 @@ const styles = StyleSheet.create({
     paddingLeft: WP(3),
     alignSelf: 'center',
     width: '95%',
+    marginTop:20
  
   },
   btn: {
-    paddingTop: HP(25),
+    paddingTop: HP(22),
   },
 });

@@ -1,7 +1,7 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Post from '../Screen/Home/Post';
 import AllItem from '../Screen/Home/AllItem';
-import {Text, View, Image, StyleSheet} from 'react-native';
+import {Text, View, Image, StyleSheet, StatusBar} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {BODY_IMAGE, COLOR, HP, WP} from '../Util/Util';
 import React from 'react';
@@ -13,7 +13,8 @@ const HomeNavigation = () => {
 
   return (
     <>
-      <View
+<StatusBar  backgroundColor="white" barStyle={"dark-content"} />
+      <View 
         style={{
           backgroundColor: 'white',
         }}>
@@ -25,7 +26,8 @@ const HomeNavigation = () => {
           tabBarIndicatorStyle: {
             backgroundColor: COLOR.mainColor,
             width: '20%',
-          marginLeft:WP(15)
+          marginLeft:WP(15),
+
           },
           
         }}>

@@ -13,6 +13,7 @@ import {AlertNofity, AlertNofityError} from '../../Util/notify';
 import HeaderComponent from '../../component/HeaderComponent';
 import {LocalStorage} from '../../Util/Storage';
 import {useNavigation} from '@react-navigation/native';
+import Dotteed from '../../assets/images/svg/dootted.svg'
 
 const OtpScreen = props => {
   const [count, setCount] = useState(1);
@@ -78,10 +79,14 @@ const OtpScreen = props => {
     <KeyboardAwareScrollView
       style={styles.container}
       contentContainerStyle={styles.input}>
-      <HeaderComponent rightComponent={true} rightText={'Sign In'} />
+      <HeaderComponent rightComponent={true}
+      
+      title='OTP Verification'
+      rightText={'Sign In'} />
 
       <View style={styles.dottedContainer}>
-        <Image source={BODY_IMAGE.dotted} style={styles.dotted} />
+        <Dotteed style={styles.dotted}/>
+        {/* <Image source={BODY_IMAGE.dotted} style={styles.dotted} /> */}
       </View>
 
       <View>
@@ -103,7 +108,7 @@ const OtpScreen = props => {
 
         <View style={styles.code}>
           <Text>
-            <Text style={styles.sec}> {seconds} seconds.</Text>
+          <Text style={styles.expires}> The code expires in <Text style={styles.sec}>{seconds} seconds.</Text></Text>   
           </Text>
         </View>
 
@@ -111,8 +116,7 @@ const OtpScreen = props => {
           <TouchableOpacity
             style={styles.resend}
             onPress={() => ResendOtpCode()}>
-            <Text style={{color: 'grey', fontFamily: FontFamily.bold}}>
-              {' '}
+            <Text style={{color: 'grey', fontFamily: FontFamily.bold ,fontSize:WP(4.3)}}>
               Resend code
             </Text>
           </TouchableOpacity>
@@ -138,7 +142,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.white,
   },
   dottedContainer: {
-    paddingTop: HP(13),
+    paddingTop: HP(2),
   },
   dotted: {
     width: HP(12),
@@ -152,6 +156,8 @@ const styles = StyleSheet.create({
     paddingTop: HP(5),
     paddingLeft: WP(20),
     color: COLOR.black,
+    fontFamily:FontFamily.medium,
+    fontWeight: 'bold',
   },
   row: {
     flexDirection: 'row',
@@ -200,4 +206,9 @@ const styles = StyleSheet.create({
   phoneNumber: {
     color: COLOR.mainColor,
   },
+  expires:{
+    color:COLOR.black,
+    textAlign:'center',
+    fontFamily:FontFamily.medium
+  }
 });

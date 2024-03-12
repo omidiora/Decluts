@@ -1,0 +1,130 @@
+diff --git a/node_modules/react-native-floating-action/src/FloatingAction.js b/node_modules/react-native-floating-action/src/FloatingAction.js
+index 4d28374..7f508fc 100644
+--- a/node_modules/react-native-floating-action/src/FloatingAction.js
++++ b/node_modules/react-native-floating-action/src/FloatingAction.js
+@@ -186,29 +186,29 @@ class FloatingAction extends Component {
+       iconColor,
+     } = this.props;
+ 
+-    if (overrideWithAction) {
+-      const { icon } = actions[0];
+-
+-      if (React.isValidElement(icon)) {
+-        return icon;
+-      }
+-      return (
+-        <Image style={{ width: iconWidth, height: iconHeight }} source={icon} />
+-      );
+-    }
+-
+-    if (floatingIcon) {
+-      if (React.isValidElement(floatingIcon)) {
+-        return floatingIcon;
+-      }
+-
+-      return (
+-        <Image
+-          style={{ width: iconWidth, height: iconHeight }}
+-          source={floatingIcon}
+-        />
+-      );
+-    }
++    // if (overrideWithAction) {
++    //   const { icon } = actions[0];
++
++    //   if (React.isValidElement(icon)) {
++    //     return icon;
++    //   }
++    //   return (
++    //     <Image style={{ width: iconWidth, height: iconHeight }} source={icon} />
++    //   );
++    // }
++
++    // if (floatingIcon) {
++    //   if (React.isValidElement(floatingIcon)) {
++    //     return floatingIcon;
++    //   }
++
++    //   return (
++    //     <Image
++    //       style={{ width: iconWidth, height: iconHeight }}
++    //       source={floatingIcon}
++    //     />
++    //   );
++    // }
+ 
+     return <AddIcon width={iconWidth} height={iconHeight} backgroundColor={iconColor} />;
+   };
+@@ -258,39 +258,39 @@ class FloatingAction extends Component {
+       onPressMain(!active);
+     }
+ 
+-    if (!active) {
+-      if (!floatingIcon) {
+-        if (animated) {
+-          Animated.spring(this.animation, { toValue: 1, useNativeDriver: false }).start();
+-        }
+-      }
+-
+-      if (animated) {
+-        Animated.spring(this.actionsAnimation, { toValue: 1, useNativeDriver: false }).start();
+-
+-        // only execute it for the background to prevent extra calls
+-        LayoutAnimation.configureNext({
+-          duration: 180,
+-          create: {
+-            type: LayoutAnimation.Types.easeInEaseOut,
+-            property: LayoutAnimation.Properties.opacity
+-          }
+-        });
+-      }
+-
+-      this.updateState(
+-        {
+-          active: true
+-        },
+-        () => {
+-          if (onOpen) {
+-            onOpen();
+-          }
+-        }
+-      );
+-    } else {
+-      this.reset();
+-    }
++    // if (!active) {
++    //   if (!floatingIcon) {
++    //     if (animated) {
++    //       Animated.spring(this.animation, { toValue: 1, useNativeDriver: false }).start();
++    //     }
++    //   }
++
++    //   if (animated) {
++    //     Animated.spring(this.actionsAnimation, { toValue: 1, useNativeDriver: false }).start();
++
++    //     // only execute it for the background to prevent extra calls
++    //     LayoutAnimation.configureNext({
++    //       duration: 180,
++    //       create: {
++    //         type: LayoutAnimation.Types.easeInEaseOut,
++    //         property: LayoutAnimation.Properties.opacity
++    //       }
++    //     });
++    //   }
++
++    //   this.updateState(
++    //     {
++    //       active: true
++    //     },
++    //     () => {
++    //       if (onOpen) {
++    //         onOpen();
++    //       }
++    //     }
++    //   );
++    // } else {
++    //   this.reset();
++    // }
+   };
+ 
+   updateState = (nextState, callback) => {

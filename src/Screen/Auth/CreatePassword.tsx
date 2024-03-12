@@ -19,6 +19,7 @@ import {AlertNofity, AlertNofityError} from '../../Util/notify';
 import {useNavigation} from '@react-navigation/native';
 import HeaderComponent from '../../component/HeaderComponent';
 import ViewContainer from '../../component/ViewContainer';
+import LockIcon from '../../assets/images/svg/lock.svg';
 
 const CreatePassword = props => {
   const {
@@ -62,12 +63,12 @@ const CreatePassword = props => {
      
         <ViewContainer>
         <HeaderComponent
-          title="Login"
+          title="Security"
           rightComponent={true}
-          rightText={'Register'}
+          rightText={'Sign in'}
           rightFunc={() =>
             navigation.navigate('Auth', {
-              screen: 'Register',
+              screen: 'Login',
             })
           }
         />
@@ -75,20 +76,21 @@ const CreatePassword = props => {
       <View
         style={[
           styles.imageContainerColumn,
-          changeLayout && {flexDirection: 'row', width: HP(50)},
+          changeLayout && {flexDirection: 'row', width: HP(52),marginLeft:WP(20)},
         ]}>
-        <Image source={BODY_IMAGE.padLock} style={styles.image} />
+        <LockIcon/>
         <View style={styles.let}>
           <Text
             style={[
               styles.text,
               changeLayout && {
                 width: '70%',
-                right: WP(8),
+                right: WP(5),
 
                 fontSize: HP(2),
                 textAlign: 'center',
                 fontWeight: 'bold',
+                color:COLOR.black
               },
             ]}>
             Lets get your account secured. This
@@ -101,16 +103,21 @@ const CreatePassword = props => {
                 fontWeight: 'bold',
                 fontFamily: FontFamily.regular,
                 marginLeft: 30,
+                color:COLOR.black
+
               },
 
               changeLayout && {
                 width: '70%',
-                right: WP(15),
+                right: WP(12),
                 paddingBottom: HP(-2),
                 fontSize: HP(2),
                 textAlign: 'center',
                 fontWeight: 'bold',
                 fontFamily: FontFamily.regular,
+                color:COLOR.black,
+                // marginLeft: 30,
+
               },
             ]}>
             is the last step, we promise.
@@ -122,7 +129,6 @@ const CreatePassword = props => {
         validationSchema={PasswordSchema}
         onSubmit={values => RegisterFunction(values)}>
         {({handleChange, handleBlur, handleSubmit, values, errors}) => (
-          console.log(errors, 'dlamldm'),
           (
             <View style={styles.form}>
               <FormInput
@@ -174,6 +180,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     paddingBottom: HP(5),
+    marginLeft:-30
   },
 
   image: {
@@ -192,6 +199,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.regular,
     fontSize: HP(2),
     marginLeft: 30,
+    color:COLOR.black
   },
   form: {
     // alignSelf: 'center',

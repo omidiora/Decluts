@@ -61,15 +61,18 @@ const ForgotPassword = () => {
             <View style={[styles.subContainer, styles.input]}>
               <FormInput
                 placeholder="Email"
-                label="Enter your email reset password"
+                label="Enter your email to  reset password"
                 onChangeText={handleChange('email')}
                 error={errors.email}
+                bold
               />
-              <FormButton
+             <View style={styles.btn}>
+             <FormButton
                 btnTitle="Continue"
                 onPress={() => handleSubmit()}
                 loading={loading}
               />
+             </View>
             </View>
           </View>
         </KeyboardAwareScrollView>
@@ -95,6 +98,10 @@ const styles = StyleSheet.create({
   },
   image: {
     alignSelf: 'center',
+    // height:HP(30),
+    // width:WP(60),
+    resizeMode:'contain',
+    marginTop:HP(-10)
   },
   input: {
     paddingTop: HP(6),
@@ -105,4 +112,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     paddingBottom: 30,
   },
+  btn:{
+    marginTop:HP(18)
+  }
 });

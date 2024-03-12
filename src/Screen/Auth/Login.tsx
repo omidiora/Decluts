@@ -22,36 +22,11 @@ import PhoneInput from 'react-native-phone-number-input';
 import HeaderComponent from '../../component/HeaderComponent';
 import {AlertNofityError} from '../../Util/notify';
 import {ErrorCheckPath} from '../../Util';
-import {Platform} from "react-native";
+import {Platform} from 'react-native';
 // import {PUSHER_BEAMS_INSTANCE_ID} from "react-native-dotenv";
-import RNPusherPushNotifications from "react-native-pusher-push-notifications";
+import RNPusherPushNotifications from 'react-native-pusher-push-notifications';
 
 const LoginScreen = () => {
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const boxHeight = useSharedValue(60);
   const [maxLines, setMaxLines] = React.useState(2);
   const [changeLayout, setChangeLayout] = React.useState(false);
@@ -127,7 +102,7 @@ const LoginScreen = () => {
                 textAlign: 'center',
               },
             ]}>
-            Welcome Back! {'\n'}Lets get you in
+            Welcome Back! {'\n'}<Text style={{fontFamily:FontFamily.medium,fontSize:HP(1.9), color:COLOR.black}}>Lets get you in</Text>
           </Text>
         </View>
       </View>
@@ -138,33 +113,12 @@ const LoginScreen = () => {
         {({handleChange, handleBlur, handleSubmit, values, errors}) => (
           <>
             <View style={styles.form}>
-              <Text style={{paddingBottom: 8, fontFamily: FontFamily.bold, color:"black"}}>
-                Phone Number *
-              </Text>
-              <View style={{height: HP(8.5)}}>
-                <PhoneInput
-                  value={values.phone?.replace(/ /g, '').replace('+234', '')}
-                  defaultCode="NG"
-                  textContainerStyle={{
-                    backgroundColor: COLOR.lightBlue,
-                    // marginTop: 1.4,
-                  }}
-                  placeholder="08066666661"
-                  containerStyle={{
-                    backgroundColor: COLOR.lightBlue,
-                    borderWidth: 0,
-                    width: '90%',
-                  }}
-                  ref={phoneInput}
-                  defaultValue={values?.phone}
-                  layout="first"
-                  onChangeText={handleChange('phone')}
-                  onChangeFormattedText={text => {
-                    setFormattedValue(text);
-                  }}
-                  withDarkTheme
-                />
-              </View>
+              <FormInput
+                placeholder="Phone Number"
+                label="Phone"
+                onChangeText={handleChange('phone')}
+                required
+              />
               <Text style={styles.phone}>{errors.phone}</Text>
               {/* <FormInput
                 label="Phone *"
@@ -175,7 +129,8 @@ const LoginScreen = () => {
               /> */}
               <FormInput
                 forgotPassword={true}
-                label="Password *"
+                label="Password"
+                required
                 placeholder="Password"
                 onChangeText={handleChange('password')}
                 onFocus={() => setChangeLayout(true)}
@@ -185,7 +140,7 @@ const LoginScreen = () => {
               />
               <View style={styles.btn}>
                 <FormButton
-                  btnTitle="Login"
+                  btnTitle="Sign in"
                   onPress={() => handleSubmit(values)}
                   loading={isLoading}
                 />
@@ -206,7 +161,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.white,
   },
   imageContainerColumn: {
-    paddingTop: HP(5),
+    paddingTop: HP(1),
     alignSelf: 'center',
     flexDirection: 'column',
     alignItems: 'center',
@@ -234,7 +189,7 @@ const styles = StyleSheet.create({
     paddingLeft: WP(8),
   },
   btn: {
-    paddingTop: HP(3),
+    marginTop: HP(14),
   },
   getIn: {
     textAlign: 'center',
