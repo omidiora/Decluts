@@ -144,6 +144,7 @@ const PreviewItem = ({route: {params}, showInterest}) => {
       <View>
         <ScrollView
           style={styles.subContainer}
+          showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingBottom: HP(10)}}>
           <Text style={styles.posted}>Posted {params?.item?.listed}</Text>
           <Text style={styles.item_name}>{params?.item?.item_name}</Text>
@@ -275,7 +276,7 @@ const styles = StyleSheet.create({
     // top: HP(-10),
     // paddingHorizontal: WP(4),
     height: HP(39),
-    width:WP(90),
+    width:WP(100),
     padding:30
   },
   item_name: {

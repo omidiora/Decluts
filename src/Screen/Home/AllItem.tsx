@@ -247,14 +247,14 @@ const styles = StyleSheet.create({
     height: HP(30),
   },
   categoryImage: {
-    width: WP(40),
+    width: WP(43),
     height: HP(16),
     borderRadius: 16,
     alignSelf: 'center',
     resizeMode: 'stretch',
   },
   categoryContainer: {
-    marginVertical: HP(3),
+    marginVertical: HP(1),
     alignSelf: 'center',
     marginLeft: 20,
   },

@@ -22,6 +22,7 @@ const HomeNavigation = () => {
       </View>
       <Tab.Navigator
         screenOptions={{
+          tabBarLabelStyle: { fontWeight:'bold'},
           // tabBarStyle: { display: true },
           tabBarIndicatorStyle: {
             backgroundColor: COLOR.mainColor,
